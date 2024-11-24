@@ -1,2 +1,9 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div style="width: 80%; margin: auto; margin-top: 5rem; text-align: center">
+  <h1>Home Page</h1>
+  <p style='font-style: italic;'>Edit in app/views/pages/home.html.erb</p>
+</div>
+
+<ul style="padding: 0; text-align: center; list-style-type: none; font-size: 1.25rem; line-height: 1.75rem;">
+  <li><%= link_to "About", about_path %></li>
+  <li><%= link_to "Contact", contact_path %></li>
+</ul>
