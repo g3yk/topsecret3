@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   before_action :redirect_if_authenticated, only: [:create, :new]
 
   def create
-    @user = User.find_by(email: params[:user][:email].downcase)
+    @user = User.find_by("email = ? OR username = ?", params[:user][:login].downcase, params[:user][:login])
     if @user
       if @user.authenticate(params[:user][:password])
         after_login_path = session[:user_return_to] || root_path

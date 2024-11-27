@@ -20,6 +20,23 @@ class UsersController < ApplicationController
     redirect_to root_path, notice: "Your account has been deleted."
   end
 
+  def edit
+    @user = current_user
+    if @user.update(edit_user_params)
+      redirect_to root_path, notice: "Account updated."
+    else
+      render :edit_profile, status: :unprocessable_entity
+    end
+  end
+
+  def edit_profile
+    @user = current_user
+  end
+
+  def account
+    @user = current_user
+  end
+
   def change_password
     @user = current_user
   end
@@ -27,7 +44,7 @@ class UsersController < ApplicationController
   def update_password
     @user = current_user
     if @user.authenticate(params[:user][:current_password])
-      if @user.update(update_user_params)
+      if @user.update(change_user_password)
         redirect_to root_path, notice: "Account updated."
       else
         render :edit, status: :unprocessable_entity
@@ -41,10 +58,14 @@ class UsersController < ApplicationController
   private
 
   def create_user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :date_of_birth)
   end
 
-  def update_user_params
-    params.require(:user).permit(:current_password, :password, :password_confirmation, :unconfirmed_email)
+  def change_user_password
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
+  end
+
+  def edit_user_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :date_of_birth, :phone, :city, :job_title, :bio)
   end
 end

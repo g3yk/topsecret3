@@ -12,8 +12,14 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
   get "login", to: "sessions#new"
 
-  put "account/change_password", to: "users#update_password", as: :update_password
+  get "account", to: "users#account"
+
+  get "account/edit", to: "users#edit_profile", as: :edit_profile
+  put "account/edit_profile", to: "users#edit", as: :update_profile
+
   get "account/change_password", to: "users#change_password", as: :change_password
+  put "account/change_password", to: "users#update_password", as: :update_password
+
   delete "account/delete", to: "users#destroy"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

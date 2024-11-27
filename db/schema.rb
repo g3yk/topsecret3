@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_212645) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_195216) do
   create_table "users", force: :cascade do |t|
     t.string "email", limit: 100, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest", null: false
+    t.string "username", limit: 20, null: false
+    t.string "first_name", limit: 50
+    t.string "last_name", limit: 50
+    t.string "phone", limit: 20
+    t.string "city", limit: 100
+    t.string "job_title", limit: 100
+    t.date "date_of_birth"
+    t.text "bio"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 end

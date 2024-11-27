@@ -4,15 +4,18 @@ class User < ApplicationRecord
 
   attr_accessor :current_password
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, presence: true, uniqueness: true, length: { maximum: 100 }
+  validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true, uniqueness: true, length: {maximum: 100}
+  validates :username, presence: true, uniqueness: true, length: {minimum: 5, maximum: 20}, format: {with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers, and underscores"}
+  validates :phone, presence: true, format: {with: /\A\+\d{1,4} \d{10}\z/, message: "must be in the format: +1 XXXXXXXXXX"}
+  validate :prevent_username_and_email_change, on: :update
 
-  # validates :Username, presence: true, uniqueness: true, length: { maximum: 20 }
-  # validates :Email, presence: true, uniqueness: true, length: { maximum: 100 }
-  # validates :PhoneNumber, uniqueness: true, allow_nil: true
+  private
 
-  # def password_digest
-  #   BCrypt::Password.create(password)
-  # end
+  def prevent_username_and_email_change
+    if username_changed? || email_changed?
+      errors.add(:base, "You cannot change your username or email.")
+    end
+  end
 
   def downcase_email
     self.email = email.downcase

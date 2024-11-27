@@ -1,16 +1,27 @@
 <h1>Pages#home</h1>
 
 <% if user_signed_in? %>
-  <h3>Hello, <%= current_user.email %></br>
+  <h3>Hello, <span style="font-style: italic;"><%= current_user.first_name %> <%= current_user.last_name %></span></h3>
+  <ul>
+    <li>Your username: <span style="font-style: bold;"><%= current_user.username %></span></li>
+    <li>Your email: <span style="font-style: bold;"><%= current_user.email %></span></li>
+    <li>Your first name: <span style="font-style: bold;"><%= current_user.first_name %></span></li>
+    <li>Your last name: <span style="font-style: bold;"><%= current_user.last_name %></span></li>
+    <li>Your date of birth: <span style="font-style: bold;"><%= current_user.date_of_birth %></span></li>
+  </ul>
 <% else %>
-  <h3>Hello, Guest</h2>
+  <br>Hello, Guest</h2>
 <% end %>
 
 <p>Find me in app/views/pages/home.html.erb</p>
 
 <% if user_signed_in? %>
+  <%= link_to "My profile", account_path %>
+  </br></br>
+  <%= link_to "Edit my profile", edit_profile_path %>
+  </br></br>
   <%= link_to "Change my password", change_password_path %>
-  
+  </br></br>
   <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to logout?" } %>
 <% else %>
   <%= link_to "Login", login_path %>
