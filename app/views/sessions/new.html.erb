@@ -4,11 +4,10 @@
 
 <h2>Login</h2>
 
-<%= form_with url: login_path, scope: :user do |form| %>
-
-  <% if flash.now[:alert] %>
+<%= form_with url: login_path, scope: :user, class: "signup-form" do |form| %>
+  <% if flash.now[:error] %>
     <div style="color: red; text-align: center; font-style: italic">
-      <%= flash.now[:alert] %>
+      <%= flash.now[:error] %>
     </div>
   <% end %>
 

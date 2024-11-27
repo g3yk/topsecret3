@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [ :edit, :destroy, :update ]
+  before_action :authenticate_user!, only: [ :destroy, :change_password, :destroy, :update_password ]
 
   def create
     @user = User.new(create_user_params)
     if @user.save
       redirect_to login_path, notice: "Successfully registered!"
     else
-      render :new, status: :unprocessable_entity
+      render :sign_up, status: :unprocessable_entity
     end
   end
 
-  def new
+  def sign_up
     @user = User.new
   end
 
@@ -20,11 +20,11 @@ class UsersController < ApplicationController
     redirect_to root_path, notice: "Your account has been deleted."
   end
 
-  def edit
+  def change_password
     @user = current_user
   end
 
-  def update
+  def update_password
     @user = current_user
     if @user.authenticate(params[:user][:current_password])
       if @user.update(update_user_params)
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     else
-      flash.now[:error] = "Incorrect password"
+      current_user.errors.add(:base, "Incorrect password")
       render :edit, status: :unprocessable_entity
     end
   end

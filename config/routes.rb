@@ -5,16 +5,16 @@ Rails.application.routes.draw do
   get "users/create"
   get "home" => "pages#home", :as => :home
 
-  get "sign_up", to: "users#new", as: :sign_up
+  get "sign_up", to: "users#sign_up", as: :sign_up
   post "sign_up", to: "users#create"
 
   post "login", to: "sessions#create"
-  get "logout", to: "sessions#destroy"
+  delete "logout", to: "sessions#destroy"
   get "login", to: "sessions#new"
 
-  put "account", to: "users#update"
-  get "account", to: "users#edit"
-  get "account/delete", to: "users#destroy"
+  put "account/change_password", to: "users#update_password", as: :update_password
+  get "account/change_password", to: "users#change_password", as: :change_password
+  delete "account/delete", to: "users#destroy"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
