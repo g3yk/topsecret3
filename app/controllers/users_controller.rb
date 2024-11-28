@@ -35,6 +35,7 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
     if @user.update(edit_user_params)
+      @user.avatar.attach(params[:user][:avatar]) if params[:user][:avatar].present?
       redirect_to root_path, notice: "Account updated."
     else
       render :edit_profile, status: :unprocessable_entity
@@ -78,6 +79,6 @@ class UsersController < ApplicationController
   end
 
   def edit_user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :date_of_birth, :country_id, :phone, :city, :job_title, :bio)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :date_of_birth, :country_id, :phone, :city, :job_title, :bio, :avatar)
   end
 end
