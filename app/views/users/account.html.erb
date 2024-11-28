@@ -1,12 +1,14 @@
 <h3>Hello, <span style="font-style: italic;"><%= current_user.first_name %> <%= current_user.last_name %></span></h3>
 <ul>
+  <li>Your account creation date: <span style="font-style: bold;"><%= current_user.created_at %></span></li>
+  <br>
   <li>Your username: <span style="font-style: bold;"><%= current_user.username %></span></li>
   <li>Your email: <span style="font-style: bold;"><%= current_user.email %></span></li>
   <li>Your first name: <span style="font-style: bold;"><%= current_user.first_name %></span></li>
   <li>Your last name: <span style="font-style: bold;"><%= current_user.last_name %></span></li>
   <li>Your date of birth: <span style="font-style: bold;"><%= current_user.date_of_birth %></span></li>
   <li>Your phone number: <span style="font-style: bold;"><%= current_user.phone %></span></li>
-  <li> Your city: <span style="font-style: bold;"><%= current_user.city %></span></li>
+  <li> Your country: <span style="font-style: bold;"><%= current_user.country.name %></span></li>
   <li> Your Job Title: <span style="font-style: bold;"><%= current_user.job_title %></span></li>
   <li>Your bio: <span style="font-style: bold;"><%= current_user.bio %></span></li>
 </ul>
