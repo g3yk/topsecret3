@@ -18,6 +18,15 @@ class PostsController < ApplicationController
     @user = current_user
     @post = @user.posts.create(post_params)
 
+    @user.followers.each do |follower|
+      Notification.create!(
+        user_trigger_id: @user.id,
+        user_target_id: follower.id,
+        message: "#{@user.username} has created a new post."
+      )
+      puts "Notification created"
+    end
+
     if @post.save
       @post.avatar.attach(params[:post][:avatar]) if params[:post][:avatar].present?
       redirect_to show_post_path(@post), notice: "Post was successfully created."
