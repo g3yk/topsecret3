@@ -199,7 +199,11 @@
           </li>
           <li class="nav-item">
             <!-- TODO: Buraya artık alırım bir blink ini @MrLucky44  -->
-            <a href="#notification" class="nav-link menu-item" data-toggle="modal">Notification <span style="color: red;"><%= @notifications.size %></span></a>
+            <a href="#notification" id="notification-link" class="nav-link menu-item" data-toggle="modal">Notification
+              <% if @notifications.any? %>
+                <span style="color: red;"><%= @notifications.size %></span>
+              <% end %>
+            </a>
           </li>
           <li class="nav-item search-container">
             <span class="search-icon" id="search-icon">
@@ -261,7 +265,7 @@
           <% else %>
             <% @notifications.each do |notification| %>
               <%= link_to user_path(notification.user_trigger.username), class: "text-decoration-none" do %>
-                <li class="media hover-media">
+                <li class="media hover-media" data-value="<%= notification.id %>">
                   
                   <% if notification.user_trigger && notification.user_trigger.avatar.attached? %>
                     <%= image_tag @user.avatar, alt: "img", width: "60px", height: "60px", class: "rounded-circle mr-3" %>
@@ -299,5 +303,21 @@
     if (!searchContainer.contains(event.target)) {
       searchContainer.classList.remove("active");
     }
+  });
+
+  
+  let notificationLink = document.getElementById("notification-link");
+  notificationLink.addEventListener("click", function(event) {
+    fetch('/notifications/mark_as_read', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({
+        notification_ids: [...document.querySelectorAll('#notification li')].map(n => n.getAttribute('data-value'))
+      })
+    });
+    
   });
 </script>

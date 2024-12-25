@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   # Search
   get "search", to: "users#search", as: :search_users
 
+  # Notifications
+  post "notifications/mark_as_read", to: "users#mark_as_read", as: :mark_as_read
+
   # Users
   get "users", to: "users#all"
   get "/:username", to: "users#show", as: :user

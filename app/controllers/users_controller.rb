@@ -5,7 +5,8 @@ class UsersController < ApplicationController
     :change_password,
     :update_password,
     :edit,
-    :edit_profile
+    :edit_profile,
+    :mark_as_read
   ]
 
   def all
@@ -80,7 +81,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def search
     if params[:query].present?
       query = "%#{params[:query]}%"
@@ -90,6 +90,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def mark_as_read
+    params[:notification_ids].each do |id|
+      Notification.find_by(id: id).update(read: true)
+    end
+
+    render json: {success: true}
+  end
 
   private
 
