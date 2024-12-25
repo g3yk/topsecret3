@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    @notifications = current_user.notifications.order(created_at: :desc)
+    @notifications = current_user.notifications.where(read: false).order(created_at: :desc)
   end
 end
