@@ -3,7 +3,11 @@
 one:
   message: MyText
   read: false
+  user_target_id: 2
+  user_trigger_id: 1
 
 two:
   message: MyText
   read: false
+  user_target_id: 3
+  user_trigger_id: 1

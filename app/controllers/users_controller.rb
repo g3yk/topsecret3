@@ -95,7 +95,9 @@ class UsersController < ApplicationController
       Notification.find_by(id: id).update(read: true)
     end
 
-    render json: {success: true}
+    render json: {
+      success: true
+    }
   end
 
   private
