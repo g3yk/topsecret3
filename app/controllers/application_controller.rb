@@ -5,10 +5,11 @@ class ApplicationController < ActionController::Base
   before_action :get_notification
 
   def get_notification
-    @notifications = [
-      "Notification 1",
-      "Notification 2",
-      "Notification 3"
-    ]
+    if current_user.nil?
+      @notifications = []
+      return
+    end
+
+    @notifications = current_user.notifications.order(created_at: :desc)
   end
 end
