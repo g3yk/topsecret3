@@ -3,7 +3,7 @@
 <% end %>
 
 <!---------------------------MOdal Section  satrts------------------->
-
+<body style="background-color: rgba(0, 0, 0, 0.8);">
 <div class="modal fade" id="followers" >
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
 
@@ -24,7 +24,7 @@
                   <%= image_tag 'default_profile.png', width: "45px",height: "45px", class: "rounded-circle avatar" %>
                 <% end %>
                 <div class="media-body text-dark" style="margin-left: 1rem">
-                  <h6 class="media-header"><%= follower.first_name %>, <strong><%= follower.last_name %></strong></h6>
+                  <h6 class="media-header"><%= follower.first_name %>&nbsp;<%= follower.last_name %></h6>
                   <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </li>
@@ -59,7 +59,7 @@
                   <%= image_tag 'default_profile.png', width: "60", class: "rounded-circle avatar" %>
                 <% end %>
                 <div class="media-body text-dark" style="margin-left: 1rem">
-                  <h6 class="media-header"><%= following.first_name %>, <strong><%= following.last_name %></strong></h6>
+                  <h6 class="media-header"><%= following.first_name %>&nbsp;<%= following.last_name %></h6>
                   <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </li>
@@ -78,20 +78,21 @@
 <div class="banner d-flex flex-column justify-content-center" style="gap: 5rem">
   <div class="d-flex flex-column justify-content-center align-items-center">
     <% if @user.avatar.attached? %>
-      <%= image_tag @user.avatar, width: "100px",height: "100px", class: "rounded-circle avatar" %>
+      <%= image_tag @user.avatar, width: "75",height: "75", class: "rounded-circle avatar" %>
     <% else %>
       <%= image_tag 'default_profile.png', width: "70", class: "rounded-circle avatar" %>
     <% end %>
 
     <h3 class="text-light"><%= "#{@user.first_name} #{@user.last_name}" %></h3>
     <div class="d-flex flex-column align-items-center justify-content-center text-center" style="height: auto;">
-    <p class="text-light" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="bio-content">
-      <%= @user.bio if @user.bio.present? %>
-    </p>
-    <% if @user.bio.present? && @user.bio.length > 100 %>
-      <button class="btn btn-link text-light p-0" id="read-more-btn">Read More</button>
-    <% end %>
-  </div>
+  <p class="text-light" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="bio-content">
+    <%= @user.bio if @user.bio.present? %>
+  </p>
+  <% if @user.bio.present? && @user.bio.length > 100 %>
+    <button class="btn btn-link text-light p-0" id="read-more-btn">Read More</button>
+  <% end %>
+</div>
+
   
 
   </div>
@@ -130,30 +131,10 @@
     <% end %>
   </div>
 <% else %>
-  <h2 style="padding: 10rem; text-align: center">The user has not shared any posts yet.</h1>
+  <h2 style="padding: 10rem; text-align: center; color: white;">The user has not shared any posts yet.</h2>
 <% end %>
+</body>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const profileAvatar = document.getElementById("profile-avatar");
-    const dropdownMenu = document.getElementById("dropdown-menu");
-
-    profileAvatar.addEventListener("click", function (event) {
-      event.stopPropagation(); // Menü kapanmasın diye tıklamayı engelle
-      dropdownMenu.style.display =
-        dropdownMenu.style.display === "block" ? "none" : "block"; // Menü göster/gizle
-    });
-
-    // Sayfanın herhangi bir yerine tıklanırsa menüyü kapat
-    document.addEventListener("click", function () {
-      dropdownMenu.style.display = "none"; // Menü kapanacak
-    });
-  });
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -178,3 +159,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+

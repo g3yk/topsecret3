@@ -7,15 +7,12 @@
   padding: 3px;
   border-color: skyblue;
   border-style: solid;
-
 }
 </style>
-
-
 <h1 class="display-4 text-center mb-4">Followings</h1>
 
 <% if @followings.present? %>
-  <ul class="list-group list-group-flush" style="height: 100vh;>
+  <ul class="list-group list-group-flush" style="height: 100vh;">
     <% @followings.each do |user| %>
       <li class="list-group-item d-flex align-items-center">
         <%= link_to user_path(user.username), class: "d-flex align-items-center text-decoration-none text-dark w-100" do %>
@@ -34,5 +31,6 @@
     <% end %>
   </ul>
 <% else %>
-  <h2 style="padding: 10rem; text-align: center; height: 100vh;"><%= @user.first_name %> has no followings.</h1>
+  <h2 style="padding: 10rem; text-align: center; height: 100vh;"><%= @user.first_name %> has no followers.</h1>
 <% end %>
+

@@ -1,6 +1,6 @@
 <% content_for :head do %>
 
-  <%= stylesheet_link_tag 'nicepage' %>
+
   <%= stylesheet_link_tag 'Sayfa-1' %>
   <% end %>
 
@@ -70,12 +70,6 @@
           <div class="mb-3">
             <%= form.label :email, "E-Posta", class: "form-label" %>
             <%= form.email_field :email, placeholder: "Geçerli bir e-posta adresi girin", class: "form-control", required: true %>
-          </div>
-
-          <!-- Phone -->
-          <div class="mb-3">
-            <%= form.label :phone, "Telefon", class: "form-label" %>
-            <%= form.telephone_field :phone, placeholder: "Telefonunuzu girin (örn. +14155552675)", class: "form-control", required: true, pattern: "\\+?\\d{0,3}[\\s\\(\\-]?([0-9]{2,3})[\\s\\)\\-]?([\\s\\-]?)([0-9]{3})[\\s\\-]?([0-9]{2})[\\s\\-]?([0-9]{2})" %>
           </div>
 
           <!-- First Name -->

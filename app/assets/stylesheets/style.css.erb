@@ -82,6 +82,34 @@
 
 }
 
+#bio-content {
+  max-width: 90%; /* Adjusts width based on the screen size */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.2rem; /* Base font size for larger screens */
+}
+
+@media (max-width: 768px) {
+  #bio-content {
+    font-size: 1rem; /* Smaller font size for tablets */
+    max-width: 80%; /* Adjust max-width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  #bio-content {
+    font-size: 0.9rem; /* Even smaller font size for mobile screens */
+    max-width: 90%; /* Adjust max-width for mobile screens */
+  }
+}
+
+@media (max-width: 400px) {
+  #bio-content {
+    font-size: 0.8rem; /* Smallest font size for extra small screens */
+    max-width: 95%; /* Adjust max-width for extra small screens */
+  }
+}
 
 
 

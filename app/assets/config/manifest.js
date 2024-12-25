@@ -2,7 +2,6 @@
 //= link_directory ../stylesheets .css
 //= link_tree ../../javascript .js
 //= link_tree ../../../vendor/javascript .js
-//= link nicepage.css
 //= link Sayfa-1.css
 //= link jquery.js
 //= link nicepage.js
