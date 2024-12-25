@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_29_170939) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_25_201148) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,6 +55,18 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_29_170939) do
     t.index ["following_id"], name: "index_followships_on_following_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.text "message", null: false
+    t.boolean "read", default: false
+    t.integer "user_trigger_id", null: false
+    t.integer "user_target_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_target_id"], name: "index_notifications_on_user_target_id"
+    t.index ["user_trigger_id", "user_target_id", "created_at"], name: "idx_on_user_trigger_id_user_target_id_created_at_216dfaac1b"
+    t.index ["user_trigger_id"], name: "index_notifications_on_user_trigger_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -85,5 +97,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_29_170939) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "notifications", "users", column: "user_target_id"
+  add_foreign_key "notifications", "users", column: "user_trigger_id"
   add_foreign_key "posts", "users"
 end
