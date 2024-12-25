@@ -1,6 +1,6 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'Ana-Sayfa' %>
-  <%= stylesheet_link_tag 'nicepage' %>
+
 <% end %>
 
 <style>
@@ -24,7 +24,7 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   }
 
-  h2 {
+  h1 {
     text-align: center;
     color: #FFD700; /* Gold title for elegance */
     margin-bottom: 20px;
@@ -82,7 +82,7 @@
 
 <body>
   <div class="container">
-    <h2>Edit Profile</h2>
+    <h1>Edit Profile</h1>
     <div class="form-container">
       <%= form_with model: @user, local: true, url: update_profile_path, class: "signup-form", method: :put do |form| %>
         <%= render partial: "shared/form_errors", locals: { object: form.object } %>
