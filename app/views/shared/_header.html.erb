@@ -188,88 +188,30 @@
 </style>
 
 <header class="header">
-<nav class="navbar navbar-expand-md navbar-dark">
-  <a href="/index" class="navbar-brand">
-    <%= image_tag "logo.png", alt: "Logo", class: "img-fluid", width: "58px", height: "58px" %>
-  </a>
-
-  <% if user_signed_in? %>
-  <!-- Avatar replaces the hamburger icon in mobile -->
-  <button 
-    class="navbar-toggler d-md-none" 
-    type="button" 
-    data-toggle="collapse" 
-    data-target="#responsive" 
-    aria-controls="responsive" 
-    aria-expanded="false" 
-    aria-label="Toggle navigation"
-  >
-
-    <% if current_user&.avatar&.attached? %>
-      <%= image_tag current_user.avatar, alt: "Avatar", class: "rounded-circle", width: "60", height: "60", id: "navbar-avatar" %>
-     
-    <% else %>
-   
-      <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "60", height: "60" %>
-    
-    <% end %>
-     
-  </button>
-<% else %>
-  <!-- Default hamburger icon for guests -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-<% end %>
-
-  <div class="collapse navbar-collapse" id="responsive">
-    <ul class="navbar-nav mr-auto text-capitalize">
-      <% if user_signed_in? %>
-        <li class="nav-item">
-          <a href="/index" class="nav-link menu-item">Ana Sayfa</a>
-        </li>
-        <li class="nav-item">
-          <a href="/profile" class="nav-link menu-item">Profil</a>
-        </li>
-        <li class="nav-item">
-          <a href="#modalview" class="nav-link menu-item" data-toggle="modal">Mesajlar</a>
-        </li>
-        <li class="nav-item search-container">
-          <span class="search-icon" id="search-icon">
-            <i class="fas fa-search"></i>
-          </span>
-          <%= form_with url: search_users_path, method: :get, local: true, class: "form-inline search-input" do %>
-            <div class="form-group">
-              <%= text_field_tag :query, params[:query], placeholder: "Search users...", class: "form-control mr-2" %>
-             <%= submit_tag "Search", class: "btn btn-transparent search-icon-btn"%>
-
-            </div>
-          <% end %>
-        </li>
-        <li class="nav-item">
-          <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn", style:"padding: 5px 2px;" %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Login", login_path, class: "nav-link menu-item" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Signup", sign_up_path, class: "nav-link menu-item" %>
-        </li>
-      <% end %>
-    </ul>
+  <nav class="navbar navbar-expand-md navbar-dark">
+    <a href="/index" class="navbar-brand">
+      <%= image_tag "logo.png", alt: "Logo", class: "img-fluid", width: "58px", height: "58px" %>
+    </a>
 
     <% if user_signed_in? %>
-      <!-- Avatar and dropdown for logout -->
-      <div class="avatar-logout-container d-none d-md-flex align-items-center ml-auto" style="border: 2px solid skyblue; border-radius: 50px; padding: 3px;">
-        <% if current_user&.avatar&.attached? %>
-          <%= image_tag current_user.avatar, alt: "Avatar", class: "rounded-circle", width: "50", height: "50", id: "navbar-avatar" %>
-        <% else %>
-        <a href="/account">
-          <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "75", height: "75" %>
-          </a>
-        <% end %>
-      </button>
+    <!-- Avatar replaces the hamburger icon in mobile -->
+    <button 
+      class="navbar-toggler d-md-none" 
+      type="button" 
+      data-toggle="collapse" 
+      data-target="#responsive" 
+      aria-controls="responsive" 
+      aria-expanded="false" 
+      aria-label="Toggle navigation"
+    >
+
+      <% if current_user&.avatar&.attached? %>
+        <%= image_tag current_user.avatar, alt: "Avatar", class: "rounded-circle", width: "60", height: "60", id: "navbar-avatar" %>
+      <% else %>
+        <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "60", height: "60" %>
+      <% end %>
+      
+    </button>
     <% else %>
       <!-- Default hamburger icon for guests -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
