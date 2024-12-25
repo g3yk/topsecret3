@@ -167,87 +167,119 @@
 </style>
 
 <header class="header">
-<nav class="navbar navbar-expand-md navbar-dark">
-  <a href="/index" class="navbar-brand">
-    <%= image_tag "brand.png", alt: "Logo", class: "img-fluid", width: "80px", height: "100px" %>
-  </a>
-
-  <% if user_signed_in? %>
-    <!-- Avatar replaces the hamburger icon in mobile -->
-    <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#responsive" aria-controls="responsive" aria-expanded="false" aria-label="Toggle navigation">
-      <% if current_user&.avatar&.attached? %>
-        <%= image_tag current_user.avatar, alt: "Avatar", class: "rounded-circle", width: "50", height: "50", id: "navbar-avatar" %>
-      <% else %>
-        <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "50", height: "50" %>
-      <% end %>
-    </button>
-  <% else %>
-    <!-- Default hamburger icon for guests -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  <% end %>
-
-  <div class="collapse navbar-collapse" id="responsive">
-    <ul class="navbar-nav mr-auto text-capitalize">
-      <% if user_signed_in? %>
-        <li class="nav-item">
-          <a href="/index" class="nav-link menu-item">Ana Sayfa</a>
-        </li>
-        <li class="nav-item">
-          <a href="/profile" class="nav-link menu-item">Profil</a>
-        </li>
-        <li class="nav-item">
-          <a href="#modalview" class="nav-link menu-item" data-toggle="modal">Mesajlar</a>
-        </li>
-        <li class="nav-item search-container">
-          <span class="search-icon" id="search-icon">
-            <i class="fas fa-search"></i>
-          </span>
-          <%= form_with url: search_users_path, method: :get, local: true, class: "form-inline search-input" do %>
-            <div class="form-group">
-              <%= text_field_tag :query, params[:query], placeholder: "Search users...", class: "form-control mr-2" %>
-             <%= submit_tag "Search", class: "btn btn-transparent search-icon-btn"%>
-
-            </div>
-          <% end %>
-        </li>
-        <li class="nav-item">
-          <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn" %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Login", login_path, class: "nav-link menu-item" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Signup", sign_up_path, class: "nav-link menu-item" %>
-        </li>
-      <% end %>
-    </ul>
+  <nav class="navbar navbar-expand-md navbar-dark">
+    <a href="/index" class="navbar-brand">
+      <%= image_tag "brand.png", alt: "Logo", class: "img-fluid", width: "80px", height: "100px" %>
+    </a>
 
     <% if user_signed_in? %>
-      <!-- Avatar and dropdown for logout -->
-      <div class="avatar-logout-container d-none d-md-flex align-items-center ml-auto">
+      <!-- Avatar replaces the hamburger icon in mobile -->
+      <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#responsive" aria-controls="responsive" aria-expanded="false" aria-label="Toggle navigation">
         <% if current_user&.avatar&.attached? %>
-          <a href="/account">
-            <%= image_tag current_user.avatar, alt: "Profile Avatar", class: "rounded-circle", width: "75", height: "75", id: "desktop-avatar" %>
-          </a>
+          <%= image_tag current_user.avatar, alt: "Avatar", class: "rounded-circle", width: "50", height: "50", id: "navbar-avatar" %>
         <% else %>
-          <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "75", height: "75" %>
+          <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "50", height: "50" %>
         <% end %>
-
-        <!-- Logout dropdown on hover -->
-        <div class="logout-dropdown ml-3">
-          <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn" %>
-        </div>
-      </div>
+      </button>
+    <% else %>
+      <!-- Default hamburger icon for guests -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     <% end %>
-  </div>
-</nav>
 
+    <div class="collapse navbar-collapse" id="responsive">
+      <ul class="navbar-nav mr-auto text-capitalize">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <a href="/index" class="nav-link menu-item">Ana Sayfa</a>
+          </li>
+          <li class="nav-item">
+            <a href="/profile" class="nav-link menu-item">Profil</a>
+          </li>
+          <li class="nav-item">
+            <a href="#notification" class="nav-link menu-item" data-toggle="modal">Notification</a>
+          </li>
+          <li class="nav-item search-container">
+            <span class="search-icon" id="search-icon">
+              <i class="fas fa-search"></i>
+            </span>
+            <%= form_with url: search_users_path, method: :get, local: true, class: "form-inline search-input" do %>
+              <div class="form-group">
+                <%= text_field_tag :query, params[:query], placeholder: "Search users...", class: "form-control mr-2" %>
+                <%= submit_tag "Search", class: "btn btn-transparent search-icon-btn"%>
 
-  
+              </div>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", login_path, class: "nav-link menu-item" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Signup", sign_up_path, class: "nav-link menu-item" %>
+          </li>
+        <% end %>
+      </ul>
+
+      <% if user_signed_in? %>
+        <!-- Avatar and dropdown for logout -->
+        <div class="avatar-logout-container d-none d-md-flex align-items-center ml-auto">
+          <% if current_user&.avatar&.attached? %>
+            <a href="/account">
+              <%= image_tag current_user.avatar, alt: "Profile Avatar", class: "rounded-circle", width: "75", height: "75", id: "desktop-avatar" %>
+            </a>
+          <% else %>
+            <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "75", height: "75" %>
+          <% end %>
+
+          <!-- Logout dropdown on hover -->
+          <div class="logout-dropdown ml-3">
+            <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </nav>
 </header>
+
+<div class="modal fade" id="notification">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title h4">Notification</div>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled">
+          <% @notifications.each do |notification| %>
+            <a href="#" class="text-decoration-none">
+              <li class="media hover-media">
+                
+                <% if current_user && current_user.avatar.attached? %>
+                  <%= image_tag @user.avatar, alt: "img", width: "60px", height: "60px", class: "rounded-circle mr-3" %>
+                <% else %>
+                  <%= image_tag 'default_profile.png', alt: "default avatar", width: "60", class: "rounded-circle avatar" %>
+                <% end %>
+                
+                <div class="media-body text-dark">
+                  <h6 class="media-header"><%= notification %> <strong> 1 others</strong></h6>
+                  <p class="media-text">lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+              </li>
+            </a>
+            
+            <hr class="my-3">
+              
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   // JavaScript to toggle the visibility of the search bar with slide-in animation
