@@ -135,13 +135,13 @@
                             <ul class="list-unstyled nav justify-content-center">
                             <div class="d-flex justify-content-around align-items-center py-3 bg-light border rounded">
                             <a href="<%= followers_path(@user.username) %>" class="text-dark text-decoration-none text-center mr-4"> <!-- Added margin-right -->
-                                <div style="margin: 0px 10px;">
+                                <div style="margin-left: 10px;">
                                     <span class="d-block">Followers</span>
                                     <strong class="display-6"><%= @user.followers.count %></strong>
                                 </div>
                             </a>
                             <a href="<%= followings_path(@user.username) %>" class="text-dark text-decoration-none text-center">
-                                <div>
+                                <div style="margin-right: 10px;">
                                     <span class="d-block">Followings</span>
                                     <strong class="display-6"><%= @user.followings.count %></strong>
                                 </div>
