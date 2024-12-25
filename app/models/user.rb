@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_followships, source: :follower
 
   has_many :posts
+  has_many :notifications, foreign_key: :user_target_id, dependent: :destroy
 
   belongs_to :country # , optional: true
   has_one_attached :avatar
