@@ -6,7 +6,7 @@
       <li class="list-group-item d-flex align-items-center">
         <%= link_to user_path(user.username), class: "d-flex align-items-center text-decoration-none text-dark" do %>
           <% if user.avatar.attached? %>
-            <%= image_tag user.avatar, class: "avatar mr-3 rounded-circle", width: "50" %>
+            <%= image_tag user.avatar, class: "avatar mr-3 rounded-circle", width: "50", height: "50" %>
           <% else %>
             <%= image_tag 'default_profile.png', class: "avatar mr-3 rounded-circle", width: "50" %>
           <% end %>
