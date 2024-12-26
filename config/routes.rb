@@ -47,10 +47,6 @@ Rails.application.routes.draw do
   # Notifications
   post "notifications/mark_as_read", to: "users#mark_as_read", as: :mark_as_read
 
-  # Users
-  get "users", to: "users#all"
-  get "/:username", to: "users#show", as: :user
-
   get "404", to: "errors#not_found", as: :not_found
   get "403", to: "errors#permission_denied", as: :permission_denied
 
@@ -63,4 +59,8 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", :as => :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", :as => :pwa_manifest
+
+  # Users
+  get "users", to: "users#all"
+  get "/:username", to: "users#show", as: :user
 end

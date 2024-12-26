@@ -207,7 +207,7 @@
       const profileAvatar = document.getElementById("profile-avatar");
       const dropdownMenu = document.getElementById("dropdown-menu");
     
-      
+      // TODO: #profile-avatar id'si bu sayfada ve header'da yok, bu yüzden alttaki click event'i hata dönüyor; bi bakarsın @MrLucky44
       profileAvatar.addEventListener("click", function (event) {
         event.stopPropagation(); // Menü kapanmasın diye tıklamayı engelle
         dropdownMenu.style.display =
