@@ -220,15 +220,21 @@
       });
     });
 
-    const heart = document.querySelector(".fa-heart");
-    const heartParent = heart.parentElement;
-    heartParent.addEventListener("click", function (e) {
-      e.preventDefault();
-      heart.classList.replace("far", "fas")
-      heart.classList.add("fa-bounce")
-      setTimeout(() => {
-        heart.classList.remove("fa-bounce")
-      }, 3000)
+    const hearts = document.querySelectorAll(".fa-heart");
+    hearts.forEach((heart) => {
+      const heartParent = heart.parentElement;
+      heartParent.addEventListener("click", function (e) {
+        e.preventDefault();
+        if(heart.classList.contains("far")){
+          heart.classList.replace("far", "fas")
+          heart.classList.add("fa-bounce")
+
+          setTimeout(() => {heart.classList.remove("fa-bounce")}, 3000)
+        } else if(heart.classList.contains("fas")){
+          heart.classList.replace("fas", "far")
+          heart.classList.remove("fa-bounce")
+        }
+      })
     })
   </script>
 
