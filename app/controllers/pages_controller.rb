@@ -9,6 +9,7 @@ class PagesController < ApplicationController
 
   def index
     @user = current_user
+    @posts = Post.where(user_id: @user.followings.pluck(:id)).order(created_at: :desc)
     @top_users = User.select("users.*, COUNT(reverse_followships.follower_id) AS followers_count")
       .joins("LEFT JOIN followships AS reverse_followships ON reverse_followships.following_id = users.id")
       .group("users.id")

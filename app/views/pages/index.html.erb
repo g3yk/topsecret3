@@ -111,6 +111,59 @@
                             </div>
                         </div>
                     </div>
+                    <% @posts.each do |post| %>
+                      <div class="card bg-gray">
+                        <div class="card-header bg-transparent">
+                          <h1><%= post.title %></h1>
+                        </div>
+                        <div class="card-body bg-gray">
+                          <div class="media">
+                            <% if post.user.avatar.attached? %>
+                                <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                            <% else %>
+                                <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                            <% end %>
+                            <div class="media-body bg-gray">
+                              <div style="display: flex; justify-content: space-between;">
+                                <h5><%= post.user.username %></h5>
+                                <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %> </p>
+                              </div>
+                              <p class="card-text text-justify"><%= post.content %></p>
+                              <div class="row no-gutters mb-3">
+                                <div class="col-6 p-1 text-center">
+                                  <% unless post.avatar[1].nil? %>
+                                    <%= image_tag post.avatar[1], alt: "", class: "img-fluid mb-2" %>
+                                  <% end %>
+                                  <% unless post.avatar[0].nil? %>
+                                    <%= image_tag post.avatar[0], alt: "", class: "img-fluid" %>
+                                  <% end %>
+                                </div>
+                                <div class="col-6 p-1 text-center">
+                                  <% unless post.avatar[3].nil? %>
+                                    <%= image_tag post.avatar[3], alt: "", class: "img-fluid mb-2" %>
+                                  <% end %>
+                                  <% unless post.avatar[2].nil? %>
+                                    <%= image_tag post.avatar[2], alt: "", class: "img-fluid" %>
+                                  <% end %>
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-between">
+                                <div>
+                                  <a href="#" class="text-decoration-none">
+                                    <i class="far fa-heart mr-2"></i> 154
+                                  </a>
+                                </div>
+                                <div>
+                                  <a href="#" class="text-decoration-none">
+                                    <i class="fas fa-comment mr-2"></i> 26
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
                 </div>
             </div>
             <!----------------------------------Ends Middle columns-->
