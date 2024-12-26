@@ -1,80 +1,80 @@
-
 <style>
   /* Add a translucent and blurry effect to the header */
   .header {
-    backdrop-filter: blur(10px); /* Blur effect */
-    background-color: rgba(0, 0, 0, 0.65); 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better distinction */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    background-color: rgba(0, 0, 0, 0.65); /* Semi-transparent background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for visual distinction */
     top: 0; /* Stick to the top of the page */
     z-index: 1020; /* Ensure it stays above other content */
     position: flex;
     z-index: 6;
   }
 
+  /* Remove text decoration on hover for menu items */
   .menu-item:hover {
-    text-decoration: none; /* Add underline on hover for links */
+    text-decoration: none;
   }
 
+  /* Style the search container */
   .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
+  /* Limit search container width */
   .search-container .form-inline {
     width: 100%;
     max-width: 400px;
   }
 
   /* Transparent search container */
-.search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
 
-/* Transparent search input */
-.search-input {
-  display: none;
-  width: 250px;
-  padding-left: 30px; /* Space for the search icon */
+  /* Hidden search input initially */
+  .search-input {
+    display: none;
+    width: 250px;
+    padding-left: 30px; /* Space for search icon */
+    transition: all 0.3s ease-out; /* Slide-in effect */
+    opacity: 0; /* Initially hidden */
+  }
 
-  
-  transition: all 0.3s ease-out; /* Slide-in effect */
-  opacity: 0; /* Initially hidden */
-}
+  /* Make search input visible when active */
+  .search-container.active .search-input {
+    display: inline-block;
+    opacity: 1;
+    transform: translateX(0); /* Slide in effect */
+  }
 
-/* Make search input visible when active */
-.search-container.active .search-input {
-  display: inline-block;
-  opacity: 1;
-  transform: translateX(0); /* Slide in */
-}
+  /* Transparent search icon */
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.7); /* Semi-transparent icon color */
+    cursor: pointer;
+  }
 
-/* Transparent search icon */
-.search-icon {
-  position: absolute;
-  left: 10px;
-  color: rgba(255, 255, 255, 0.7); /* Semi-transparent icon color */
-  cursor: pointer;
-}
+  /* Hide the search icon when the input field is active */
+  .search-container.active .search-icon {
+    display: none;
+  }
 
-/* Hide the search icon when the input field is active */
-.search-container.active .search-icon {
-  display: none;
-}
+  /* Transparent submit button style */
+  .search-input .btn {
+    background-color: rgb(65, 105, 225, 0.8);
+    color: white; /* White text color */
+    border: none;
+  }
 
-/* Transparent submit button */
-.search-input .btn {
-  background-color: rgb(65, 105, 225,0.8);
-  color: white; /* White text color */
-  border: none;
-}
-
-.search-input .btn:hover {
-  background-color: rgba(0, 0, 0, 0.5); /* Darker button on hover */
-}
-
+  /* Button hover effect */
+  .search-input .btn:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Darker button on hover */
+  }
 
   /* Style for search input box */
   .form-control {
@@ -82,86 +82,91 @@
     transition: padding-left 0.3s ease-out;
   }
 
-  /* Add some padding when the input field is visible */
+  /* Add padding when input field is visible */
   .search-container.active .form-control {
     padding-left: 30px;
   }
 
   /* Initially hide the logout button */
-.avatar-logout-container .logout-btn {
-  display: none;
-  margin-top: 10px; 
-}
-
-/* Show the logout button when hovering over the avatar container */
-.avatar-logout-container:hover .logout-btn {
-  display: inline-block;
-}
-
-/* Adjust avatar size for different screen sizes */
-@media (max-width: 768px) {
-  .avatar-logout-container img {
-    width: 50px;
-    height: 50px;
-  }
-}
-
-/* Always show logout button in responsive mode */
-@media (max-width: 768px) {
-  .logout-btn {
-    display: block !important; /* Always visible in responsive mode */
-    margin-top: 5px;
-  }
-}
-
-/* Default behavior for logout button */
-.logout-btn {
-  display: none; /* Hidden by default */
-  margin-top: 10px;
-}
-
-/* Show logout button on hover (desktop only) */
-.avatar-logout-container:hover .logout-btn {
-  display: inline-block;
-}
-
-/* Hide avatar in the hamburger dropdown (collapsed navbar) */
-@media (max-width: 768px) {
-  .avatar-logout-container {
+  .avatar-logout-container .logout-btn {
     display: none;
+    margin-top: 10px;
   }
-}
-/* Avatar and logout dropdown on hover */
-.avatar-logout-container {
-  position: relative;
-}
 
-.logout-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 10; /* Ensures it appears above other elements */
-}
+  /* Show logout button when hovering over avatar container */
+  .avatar-logout-container:hover .logout-btn {
+    display: inline-block;
+  }
 
-.avatar-logout-container:hover .logout-dropdown {
-  display: block;
-}
+  /* Adjust avatar size for smaller screen sizes */
+  @media (max-width: 768px) {
+    .avatar-logout-container img {
+      width: 50px;
+      height: 50px;
+    }
+  }
 
-/* Optional: Add some styling to make the dropdown look better */
-.logout-btn {
-  background-color: rgb(65, 105, 225);
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-}
+  /* Always show logout button in responsive mode */
+  @media (max-width: 768px) {
+    .logout-btn {
+      display: block !important; /* Always visible in responsive mode */
+      margin-top: 5px;
+    }
+  }
 
-.logout-btn:hover {
-  background-color: rgba(255, 0, 0, 0.7); /* Red background on hover */
-  color: white;
-}
+  /* Default behavior for logout button */
+  .logout-btn {
+    display: none; /* Hidden by default */
+    margin-top: 10px;
+  }
 
-.navbar-toggler {
+  /* Show logout button on hover (desktop only) */
+  .avatar-logout-container:hover .logout-btn {
+    display: inline-block;
+  }
+
+  /* Hide avatar in the hamburger dropdown (collapsed navbar) */
+  @media (max-width: 768px) {
+    .avatar-logout-container {
+      display: none;
+    }
+  }
+
+  /* Avatar and logout dropdown on hover */
+  .avatar-logout-container {
+    position: relative;
+  }
+
+  /* Hide logout dropdown by default */
+  .logout-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10; /* Ensures it appears above other elements */
+  }
+
+  /* Show logout dropdown on hover */
+  .avatar-logout-container:hover .logout-dropdown {
+    display: block;
+  }
+
+  /* Optional: Style the logout button */
+  .logout-btn {
+    background-color: rgb(65, 105, 225);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  /* Change logout button color on hover */
+  .logout-btn:hover {
+    background-color: rgba(255, 0, 0, 0.7); /* Red background on hover */
+    color: white;
+  }
+
+  /* Style for the navbar-toggler button */
+  .navbar-toggler {
     border-radius: 50%;
     width: 75px;
     height: 75px;
@@ -169,18 +174,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Ensure the image fits perfectly inside */
+    overflow: hidden; /* Ensure image fits perfectly */
     padding: 0;
     background-color: transparent; /* Transparent background */
   }
 
+  /* Change border color on focus or active state */
   .navbar-toggler:focus,
   .navbar-toggler:active {
     outline: none; /* Remove default outline */
-    border: 2px solid skyblue;
-     /* Change border color on click */
+    border: 2px solid skyblue; /* Focused border color */
   }
 
+  /* Ensure image fits the circle in the navbar-toggler */
   .navbar-toggler img {
     object-fit: cover; /* Ensure image fills the circle */
   }
@@ -194,7 +200,7 @@
     </a>
 
     <% if user_signed_in? %>
-    <!-- Avatar replaces the hamburger icon in mobile -->
+    <!-- Avatar replaces the hamburger icon in mobile view -->
     <button 
       class="navbar-toggler d-md-none" 
       type="button" 
@@ -223,13 +229,12 @@
       <ul class="navbar-nav mr-auto text-capitalize">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <a href="/index" class="nav-link menu-item">Ana Sayfa</a>
+            <a href="/index" class="nav-link menu-item">Home</a>
           </li>
           <li class="nav-item">
-            <a href="/profile" class="nav-link menu-item">Profil</a>
+            <a href="/profile" class="nav-link menu-item">Profile</a>
           </li>
           <li class="nav-item">
-            <!-- TODO: Buraya artık alırım bir blink ini @MrLucky44  -->
             <a href="#notification" id="notification-link" class="nav-link menu-item" data-toggle="modal">Notification
               <% if @notifications.any? %>
                 <i class="fa fa-bell fa-xl fa-shake"></i>
@@ -245,7 +250,6 @@
               <div class="form-group">
                 <%= text_field_tag :query, params[:query], placeholder: "Search users...", class: "form-control mr-2" %>
                 <%= submit_tag "Search", class: "btn btn-transparent search-icon-btn"%>
-
               </div>
             <% end %>
           </li>
@@ -268,9 +272,7 @@
         <div class="avatar-logout-container d-none d-md-flex align-items-center ml-auto" style="border: 3px solid skyblue; border-radius: 50px; padding: 3px;">
         <a href="/account">
           <% if current_user&.avatar&.attached? %>
-            
-              <%= image_tag current_user.avatar, alt: "Profile Avatar", class: "rounded-circle", width: "75", height: "75", id: "desktop-avatar" %>
-            
+            <%= image_tag current_user.avatar, alt: "Profile Avatar", class: "rounded-circle", width: "75", height: "75", id: "desktop-avatar" %>
           <% else %>
             <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "75", height: "75" %>
           <% end %>
@@ -300,21 +302,17 @@
             <% @notifications.each do |notification| %>
               <%= link_to user_path(notification.user_trigger.username), class: "text-decoration-none" do %>
                 <li class="media hover-media" data-value="<%= notification.id %>">
-                  
                   <% if notification.user_trigger&.avatar&.attached? %>
-  <%= image_tag notification.user_trigger.avatar, alt: "img", width: "60", height: "60", class: "rounded-circle mr-3" %>
-<% else %>
-  <%= image_tag 'default_profile.png', alt: "default avatar", width: "60", class: "rounded-circle avatar" %>
-<% end %>
-
-                  
+                    <%= image_tag notification.user_trigger.avatar, alt: "img", width: "60", height: "60", class: "rounded-circle mr-3" %>
+                  <% else %>
+                    <%= image_tag 'default_profile.png', alt: "default avatar", width: "60", class: "rounded-circle avatar" %>
+                  <% end %>
                   <div class="media-body text-dark" style="margin-left: 1rem;">
                     <h6 class="media-header"><%= notification.message %> <i> <%= notification.created_at.strftime('%H:%m, %b %d') %></i></h6>
                     <p class="media-text">lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                   </div>
                 </li>
               <% end %>
-              
               <hr class="my-3">
             <% end %>
           <% end %>
@@ -325,49 +323,43 @@
 </div>
 
 <script>
+// Handle actions for search icon and search container
 document.addEventListener("turbo:load", function () {
-  
-  // Search icon toggle visibility of the search container
   const searchIcon = document.getElementById("search-icon");
   const searchContainer = document.querySelector(".search-container");
 
   if (searchIcon && searchContainer) {
     searchIcon.addEventListener("click", function(event) {
-      searchContainer.classList.toggle("active"); // Toggle the 'active' class to show or hide
-      event.stopPropagation(); // Prevent the event from propagating to the document
+      searchContainer.classList.toggle("active"); // Toggle search input visibility
+      event.stopPropagation(); // Prevent event from bubbling up
     });
   }
-
 });
 
-  
-  // Close the search bar if clicking outside of the search container
-  const searchContainer = document.querySelector(".search-container");
+// Close the search input when clicking outside of the search container
+const searchContainer = document.querySelector(".search-container");
+if (searchContainer) {
+  document.addEventListener("click", function(event) {
+    if (!searchContainer.contains(event.target)) {
+      searchContainer.classList.remove("active"); // Hide search input
+    }
+  });
+}
 
-  if (searchContainer) {
-    document.addEventListener("click", function(event) {
-      if (!searchContainer.contains(event.target)) {
-        searchContainer.classList.remove("active"); // Remove 'active' class to hide the search bar
-      }
-    });
-  }
-
-
+// Handle notification marking as read
 document.addEventListener("turbo:load", function () {
-  
-  // Handle the notification click
   const notificationLink = document.getElementById("notification-link");
-  
+
   if (notificationLink) {
     notificationLink.addEventListener("click", function(event) {
-      [...notificationLink.children].forEach(e => e.hidden = true); // Hide all children of notificationLink
+      [...notificationLink.children].forEach(e => e.hidden = true); // Hide children
 
-      // Send a request to mark notifications as read
+      // Send request to mark notifications as read
       fetch('/notifications/mark_as_read', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // Include CSRF token
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // CSRF token for security
         },
         body: JSON.stringify({
           notification_ids: [...document.querySelectorAll('#notification li')].map(n => n.getAttribute('data-value')) // Get notification IDs
@@ -375,8 +367,5 @@ document.addEventListener("turbo:load", function () {
       });
     });
   }
-
 });
-
-
 </script>
