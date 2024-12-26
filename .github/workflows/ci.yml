@@ -150,4 +150,3 @@ jobs:
           total_time=$(( ${needs.scan_ruby.outputs.execution_time} + ${needs.scan_js.outputs.execution_time} + ${needs.lint.outputs.execution_time} + ${needs.test.outputs.execution_time} ))
           average_time=$(( total_time / 4 ))
           echo "Average Execution Time: $average_time seconds"
-
