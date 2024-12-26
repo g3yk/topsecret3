@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Ensures that the password is securely hashed and stored
   has_secure_password
-  
+
   # Callback to downcase the email before saving the record
   before_save :downcase_email
 
@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   # Association: a user belongs to a country
   belongs_to :country # , optional: true
-  
+
   # User can upload an avatar image
   has_one_attached :avatar
 
