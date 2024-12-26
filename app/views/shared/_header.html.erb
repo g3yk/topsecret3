@@ -330,7 +330,7 @@ document.addEventListener("turbo:load", function () {
     searchContainer.classList.toggle("active");
     event.stopPropagation(); // Prevent the click event from propagating
   });
-
+document.addEventListener("turbo:load", function (){
   // Close the search bar if clicking anywhere outside of the search container
   document.addEventListener("click", function(event) {
     var searchContainer = document.querySelector(".search-container");
@@ -339,7 +339,7 @@ document.addEventListener("turbo:load", function () {
     }
   });
     });
-  
+    });
   let notificationLink = document.getElementById("notification-link");
 document.addEventListener("turbo:load", function () {  
   notificationLink.addEventListener("click", function(event) {
