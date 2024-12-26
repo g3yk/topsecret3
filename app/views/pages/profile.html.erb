@@ -129,3 +129,26 @@
     </h2>
   <% end %>
 </body>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const readMoreBtn = document.getElementById("read-more-btn");
+    const bioContent = document.getElementById("bio-content");
+
+    if (readMoreBtn && bioContent) {
+      readMoreBtn.addEventListener("click", () => {
+        if (bioContent.style.whiteSpace === "nowrap") {
+          bioContent.style.whiteSpace = "normal";
+          bioContent.style.overflow = "visible";
+          bioContent.style.textOverflow = "clip";
+          readMoreBtn.textContent = "Read Less";
+        } else {
+          bioContent.style.whiteSpace = "nowrap";
+          bioContent.style.overflow = "hidden";
+          bioContent.style.textOverflow = "ellipsis";
+          readMoreBtn.textContent = "Read More";
+        }
+      });
+    }
+  });
+</script>
