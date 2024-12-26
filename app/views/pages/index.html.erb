@@ -156,5 +156,16 @@
         dropdownMenu.style.display = "none"; // Menü kapanacak
       });
     });
+
+    const heart = document.querySelector(".fa-heart");
+    const heartParent = heart.parentElement;
+    heartParent.addEventListener("click", function (e) {
+      e.preventDefault();
+      heart.classList.replace("far", "fas")
+      heart.classList.add("fa-bounce")
+      setTimeout(() => {
+        heart.classList.remove("fa-bounce")
+      }, 3000)
+    })
   </script>
 
