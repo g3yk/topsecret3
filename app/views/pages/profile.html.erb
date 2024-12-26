@@ -3,7 +3,7 @@
 <% end %>
 
 <!---------------------------MOdal Section  satrts------------------->
-<body style="background-color: rgba(0, 0, 0, 0.7);">
+<body style="background-color: rgba(0, 0, 0, 0.8);">
 <div class="modal fade" id="followers" >
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
 
@@ -24,7 +24,7 @@
                   <%= image_tag 'default_profile.png', width: "45px",height: "45px", class: "rounded-circle avatar" %>
                 <% end %>
                 <div class="media-body text-dark" style="margin-left: 1rem">
-                  <h6 class="media-header"><%= follower.first_name %>, <strong><%= follower.last_name %></strong></h6>
+                  <h6 class="media-header"><%= follower.first_name %>&nbsp;<%= follower.last_name %></h6>
                   <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </li>
@@ -59,7 +59,7 @@
                   <%= image_tag 'default_profile.png', width: "60", class: "rounded-circle avatar" %>
                 <% end %>
                 <div class="media-body text-dark" style="margin-left: 1rem">
-                  <h6 class="media-header"><%= following.first_name %>, <strong><%= following.last_name %></strong></h6>
+                  <h6 class="media-header"><%= following.first_name %>&nbsp;<%= following.last_name %></h6>
                   <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </li>
@@ -78,7 +78,7 @@
 <div class="banner d-flex flex-column justify-content-center" style="gap: 5rem">
   <div class="d-flex flex-column justify-content-center align-items-center">
     <% if @user.avatar.attached? %>
-      <%= image_tag @user.avatar, width: "100px",height: "100px", class: "rounded-circle avatar" %>
+      <%= image_tag @user.avatar, width: "75",height: "75", class: "rounded-circle avatar" %>
     <% else %>
       <%= image_tag 'default_profile.png', width: "70", class: "rounded-circle avatar" %>
     <% end %>
@@ -137,7 +137,7 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbo:load", () => {
   const readMoreBtn = document.getElementById("read-more-btn");
   const bioContent = document.getElementById("bio-content");
 
@@ -160,11 +160,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </script>
 
-<style>
-#bio-content {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-</style>

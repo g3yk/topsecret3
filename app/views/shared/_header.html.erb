@@ -323,35 +323,49 @@
 </div>
 
 <script>
-  // JavaScript to toggle the visibility of the search bar with slide-in animation
-  document.getElementById("search-icon").addEventListener("click", function(event) {
-    var searchContainer = document.querySelector(".search-container");
-    searchContainer.classList.toggle("active");
-    event.stopPropagation(); // Prevent the click event from propagating
-  });
+  document.addEventListener("turbo:load", function () {
+  // Toggle the visibility of the search bar with slide-in animation
+  const searchIcon = document.getElementById("search-icon");
+  const searchContainer = document.querySelector(".search-container");
 
-  // Close the search bar if clicking anywhere outside of the search container
-  document.addEventListener("click", function(event) {
-    var searchContainer = document.querySelector(".search-container");
-    if (!searchContainer.contains(event.target)) {
-      searchContainer.classList.remove("active");
-    }
-  });
-
-  
-  let notificationLink = document.getElementById("notification-link");
-  notificationLink.addEventListener("click", function(event) {
-    [...notificationLink.children].forEach(e=>e.hidden=true)
-    fetch('/notifications/mark_as_read', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-      },
-      body: JSON.stringify({
-        notification_ids: [...document.querySelectorAll('#notification li')].map(n => n.getAttribute('data-value'))
-      })
+  if (searchIcon && searchContainer) {
+    searchIcon.addEventListener("click", function (event) {
+      searchContainer.classList.toggle("active");
+      event.stopPropagation(); // Prevent the click event from propagating
     });
-    
-  });
+
+    // Close the search bar when clicking outside of it
+    document.addEventListener("click", function (event) {
+      if (!searchContainer.contains(event.target)) {
+        searchContainer.classList.remove("active");
+      }
+    });
+  }
+
+  // Handle notification link click to mark notifications as read
+  const notificationLink = document.getElementById("notification-link");
+
+  if (notificationLink) {
+    notificationLink.addEventListener("click", function () {
+      // Hide all child elements of the notification link
+      [...notificationLink.children].forEach((child) => {
+        child.hidden = true;
+      });
+
+      // Mark notifications as read via fetch API
+      fetch("/notifications/mark_as_read", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({
+          notification_ids: [...document.querySelectorAll("#notification li")].map((n) =>
+            n.getAttribute("data-value")
+          ),
+        }),
+      });
+    });
+  }
+});
 </script>
