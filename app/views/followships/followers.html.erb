@@ -1,29 +1,36 @@
 <style>
+/* Avatar styling to standardize profile image display */
 .avatar {
-  border-radius: 50%;
-  object-fit: cover;
-  width: 50px;
-  height: 50px;
-  padding: 3px;
-  border-color: skyblue;
-  border-style: solid;
+  border-radius: 50%; /* Ensures the avatar is displayed as a circle */
+  object-fit: cover; /* Maintains the aspect ratio within the given dimensions */
+  width: 50px; /* Sets the avatar width */
+  height: 50px; /* Sets the avatar height */
+  padding: 3px; /* Adds padding around the avatar */
+  border-color: skyblue; /* Defines the border color */
+  border-style: solid; /* Applies a solid border to the avatar */
 }
 </style>
+
 <h1 class="display-4 text-center mb-4">Followers</h1>
 
 <% if @followers.present? %>
   <ul class="list-group list-group-flush" style="height: 100vh;">
     <% @followers.each do |user| %>
       <li class="list-group-item d-flex align-items-center">
+        <!-- Link to the follower's profile with a clean layout -->
         <%= link_to user_path(user.username), class: "d-flex align-items-center text-decoration-none text-dark w-100" do %>
           <% if user.avatar.attached? %>
+            <!-- Display the follower's avatar if available -->
             <%= image_tag user.avatar, class: "avatar circle mr-3", width: "50", height: "50" %>
           <% else %>
+            <!-- Display a default avatar if the follower doesn't have one -->
             <%= image_tag 'default_profile.png', class: "avatar circle mr-3", width: "50", height: "50" %>
           <% end %>
           
           <div>
+            <!-- Display the follower's username in bold -->
             <strong class="d-block"><%= user.username %></strong>
+            <!-- Display the follower's first and last name in muted text -->
             <small class="text-muted"><%= user.first_name %>, <%= user.last_name %></small>
           </div>
         <% end %>
@@ -31,6 +38,10 @@
     <% end %>
   </ul>
 <% else %>
-  <h2 style="padding: 10rem; text-align: center; height: 100vh;"><%= @user.first_name %> has no followers.</h1>
+  <!-- Placeholder message if the user has no followers -->
+  <h2 style="padding: 10rem; text-align: center; height: 100vh;">
+    <%= @user.first_name %> has no followers.
+  </h2>
 <% end %>
+
 
