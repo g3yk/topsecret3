@@ -1,162 +1,180 @@
 <style>
-  .bg-gray {
+.bg-gray {
     background-color: #f8f9fa;
-  }
-
-  .header {
+}
+.header {
     backdrop-filter: blur(10px); /* Blur effect */
-    background-color: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    position: sticky; /* Stick header to top */
-    top: 0;
-    z-index: 6; /* Ensure header is above other content */
+    background-color: rgba(0, 0, 0, 0.9); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better distinction */
+    top: 0; /* Stick to the top of the page */
+    z-index: 1020; /* Ensure it stays above other content */
+    position: flex;
+    z-index: 6;
   }
 </style>
 <body style="height: 100vh;">
-
-<div class="container">
-    <div class="row">
-      <!-- Left Column -->
-      <div class="col-12 col-lg-3">
-        <div class="left-column">
-          <!-- Profile Card -->
-          <div class="card card-left1 mb-4 bg-gray">
-            <%= image_tag "photo-1455448972184-de647495d428.jpg", alt: "", class: "card-img-top img-fluid" %>
-            <div class="card-body text-center bg-gray">
-              <% if current_user&.avatar&.attached? %>
-                <%= image_tag current_user.avatar, alt: "Profile Image", width: "100", height: "100", class: "rounded-circle mt-n5" %>
-              <% else %>
-                <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "60", class: "rounded-circle avatar" %>
-              <% end %>
-              <h5 class="card-title"><%= current_user.username %></h5>
-              <p class="card-text text-justify mb-2"><%= current_user.bio %></p>
-              <div class="d-flex justify-content-around align-items-center py-3 bg-light border rounded">
-                <a href="<%= followers_path(@user.username) %>" class="text-dark text-decoration-none text-center">
-                  <span>Followers</span>
-                  <strong class="d-block"><%= @user.followers.count %></strong>
-                </a>
-                <a href="<%= followings_path(@user.username) %>" class="text-dark text-decoration-none text-center">
-                  <span>Followings</span>
-                  <strong class="d-block"><%= @user.followings.count %></strong>
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- About Card -->
-          <div class="card shadow-sm card-left2 mb-4 bg-gray">
-            <div class="card-body">
-              <h5 class="mb-3 card-title">
-                Hakkında
-                <small><%= link_to "Edit", "/account/edit", class: "ml-1" %></small>
-              </h5>
-              <p class="card-text"><i class="far fa-building mr-2"></i><%= current_user.job_title %></p>
-              <p class="card-text"><i class="fas fa-map-marker mr-2"></i><%= current_user.country.name %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Middle Column -->
-      <div class="col-12 col-lg-6">
-        <div class="middle-column">
-          <div class="card bg-gray">
-            <div class="card-header bg-transparent">
-              <form class="form-inline">
-                <div class="input-group w-100">
-                  <input type="text" name="message" id="message" placeholder="Mesaj" class="form-control form-control-md">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <i class="fas fa-camera"></i>
+    <!-------------------------------------------Start Grids layout for lg-xl-3 columns and (xs-lg 1 columns)--------------------------------->
+    <div class="container">
+        <div class="row">
+            <!--------------------------left columns start-->
+            <div class="col-12 col-lg-3 ">
+                <div class="left-column">
+                    <div class="card card-left1 mb-4 bg-gray">
+                        <%= image_tag "photo-1455448972184-de647495d428.jpg", alt: "", class: "card-img-top img-fluid" %>
+                        <div class="card-body text-center bg-gray ">
+                            <% if current_user && current_user.avatar.attached? %>
+                                <%= image_tag current_user.avatar, alt: "img", width: "100", height: "100", class: "rounded-circle mt-n5" %>
+                            <% else %>
+                                <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "60", class: "rounded-circle avatar" %>
+                            <% end %>
+                            <h5 class="card-title"><%= current_user.username %></h5>
+                            <p class="card-text text-justify mb-2"><%= current_user.bio %></p>
+                            <ul class="list-unstyled nav justify-content-center">
+                            <div class="d-flex justify-content-around align-items-center py-3 bg-light border rounded">
+                            <a href="<%= followers_path(@user.username) %>" class="text-dark text-decoration-none text-center mr-4"> <!-- Added margin-right -->
+                                <div style="margin-left: 10px;">
+                                    <span class="d-block">Followers</span>
+                                    <strong class="display-6"><%= @user.followers.count %></strong>
+                                </div>
+                            </a>
+                            <a href="<%= followings_path(@user.username) %>" class="text-dark text-decoration-none text-center">
+                                <div style="margin-right: 10px;">
+                                    <span class="d-block">Followings</span>
+                                    <strong class="display-6"><%= @user.followings.count %></strong>
+                                </div>
+                            </a>
+                        </div>
+                        
+                            </ul>
+                        </div>
                     </div>
-                  </div>
+                    <div class="card shadow-sm card-left2 mb-4 bg-gray">
+                        <div class="card-body">
+                            <h5 class="mb-3 card-title">
+                                Hakkında
+                                <small>
+                                    <%= link_to "Edit", "/account/edit", class: "ml-1" %>
+                                </small>
+                            </h5>
+                            <p class="card-text"> <i class="far fa-building mr-2"></i> <%= current_user.job_title %></p>
+                            <p class="card-text"> <i class="fas fa-map-marker mr-2"></i> <%= current_user.country.name %></p>
+                        </div>
+                    </div>
                 </div>
-              </form>
             </div>
-            <div class="card-body bg-gray">
-              <div class="media">
-                <%= image_tag "avatar-fat.jpg", alt: "Profile Image", width: "55", height: "55", class: "rounded-circle mr-3" %>
-                <div class="media-body">
-                  <h5>Burak Kurt</h5>
-                  <p class="card-text text-justify">
-                    Kendi çekmiş olduğum resimleri sizinle paylaşmak istedim. Yorumlarınızı bekliyorum.
-                  </p>
-                  <div class="row no-gutters mb-3">
-                    <div class="col-6 p-1 text-center">
-                      <%= image_tag "adventure-alps-clouds-2259810.jpg", alt: "", class: "img-fluid mb-2" %>
-                      <%= image_tag "aerial-view-architectural-design-buildings-2228123.jpg", alt: "", class: "img-fluid" %>
+            <!--------------------------Ends Left columns-->
+            <!---------------------------------------Middle columns start---------------->
+            <div class="col-12 col-lg-6">
+                <div class="middle-column">
+                    <div class="card bg-gray">
+                        <div class="card-header bg-transparent">
+                            <form class="form-inline">
+                                <div class="input-group w-100">
+                                    <input type="text" name="message" id="message" placeholder="Mesaj" class="form-control form-control-md">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-body bg-gray">
+                            <div class="media">
+                                <%= image_tag "avatar-fat.jpg", alt: "img", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                <div class="media-body bg-gray">
+                                    <h5>Burak Kurt</h5>
+                                    <p class="card-text text-justify">Kendi çekmiş olduğum resimleri sizinle paylaşmak istedim. Yorumlarınızı bekliyorum.</p>
+                                    <div class="row no-gutters mb-3">
+                                        <div class="col-6 p-1 text-center">
+                                            <%= image_tag "adventure-alps-clouds-2259810.jpg", alt: "", class: "img-fluid mb-2" %>
+                                            <%= image_tag "aerial-view-architectural-design-buildings-2228123.jpg", alt: "", class: "img-fluid" %>
+                                        </div>
+                                        <div class="col-6 p-1 text-center">
+                                            <%= image_tag "celebration-colored-smoke-dark-2297472.jpg", alt: "", class: "img-fluid mb-2" %>
+                                            <%= image_tag "bodybuilding-exercise-fitness-2294361.jpg", alt: "", class: "img-fluid" %>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <a href="#" class="text-decoration-none">
+                                                <i class="far fa-heart mr-2"></i> 154
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="text-decoration-none">
+                                                <i class="fas fa-comment mr-2"></i> 26
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 p-1 text-center">
-                      <%= image_tag "celebration-colored-smoke-dark-2297472.jpg", alt: "", class: "img-fluid mb-2" %>
-                      <%= image_tag "bodybuilding-exercise-fitness-2294361.jpg", alt: "", class: "img-fluid" %>
-                    </div>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <a href="#" class="text-decoration-none">
-                      <i class="far fa-heart mr-2"></i>154
-                    </a>
-                    <a href="#" class="text-decoration-none">
-                      <i class="fas fa-comment mr-2"></i>26
-                    </a>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <!-- Right Column -->
-      <div class="col-12 col-lg-3">
-        <div class="right-column">
-          <div class="card bg-gray">
-            <div class="card-header bg-transparent">
-              <h5>Top Users</h5>
-            </div>
-            <div class="card-body">
-              <ul class="list-unstyled">
-                <% @top_users.each do |user| %>
-                  <li class="d-flex justify-content-between mb-3">
-                    <div class="d-flex align-items-center">
-                      <%= image_tag user.avatar_url, alt: "Avatar", width: "40", height: "40", class: "rounded-circle mr-2" %>
-                      <span><%= user.username %></span>
+            <!----------------------------------Ends Middle columns-->
+            <!-------------------------Right columns start-->
+            <div class="col-12 col-lg-3 ">
+                <div class="right-column">
+                    <div class="card bg-gray">
+                        <div class="card-header bg-transparent">
+                            <span class="h5">Top Users</span>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="d-flex justify-content-between mb-3">
+                                    <div class="d-flex">
+                                        <%= image_tag "avatar-mdo.png", alt: "img", width: "40px", height: "40px", class: "rounded-circle mr-2" %>
+                                        <span> Mark Otto</span>
+                                    </div>
+                                    <span><%= @user.followers.count %></span>
+                                </li>
+                                <li class="d-flex justify-content-between mb-3">
+                                    <div class="d-flex">
+                                        <%= image_tag "avatar-fat.jpg", alt: "img", width: "40px", height: "40px", class: "rounded-circle mr-2" %>
+                                        <span>Jacob Thunder</span>
+                                    </div>
+                                    <span><%= @user.followers.count %></span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <span><%= user.followers.count %></span>
-                  </li>
-                <% end %>
-              </ul>
+                </div>
             </div>
-          </div>
+            <!---------------------------Ends Right columns-->
         </div>
-      </div>
     </div>
-  </div>
+    <!------------------------------------End Grids layout---------------------------------------->
 
+</body>
 <script>
-    // Dropdown Menu Toggle
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", function () {
       const profileAvatar = document.getElementById("profile-avatar");
       const dropdownMenu = document.getElementById("dropdown-menu");
+    
+      
+      profileAvatar.addEventListener("click", function (event) {
+        event.stopPropagation(); // Menü kapanmasın diye tıklamayı engelle
+        dropdownMenu.style.display =
+          dropdownMenu.style.display === "block" ? "none" : "block"; // Menü göster/gizle
+      });
 
-      if (profileAvatar && dropdownMenu) {
-        profileAvatar.addEventListener("click", (event) => {
-          event.stopPropagation(); // Prevent menu from closing
-          dropdownMenu.style.display =
-            dropdownMenu.style.display === "block" ? "none" : "block";
-        });
-
-        document.addEventListener("click", () => {
-          dropdownMenu.style.display = "none";
-        });
-      }
+      // Sayfanın herhangi bir yerine tıklanırsa menüyü kapat
+      document.addEventListener("click", function () {
+        dropdownMenu.style.display = "none"; // Menü kapanacak
+      });
     });
 
-    // Heart Animation
     const heart = document.querySelector(".fa-heart");
-    if (heart) {
-      heart.parentElement.addEventListener("click", (event) => {
-        event.preventDefault();
-        heart.classList.replace("far", "fas");
-        heart.classList.add("fa-bounce");
-        setTimeout(() => heart.classList.remove("fa-bounce"), 3000);
-      });
-    }
+    const heartParent = heart.parentElement;
+    heartParent.addEventListener("click", function (e) {
+      e.preventDefault();
+      heart.classList.replace("far", "fas")
+      heart.classList.add("fa-bounce")
+      setTimeout(() => {
+        heart.classList.remove("fa-bounce")
+      }, 3000)
+    })
   </script>
-</body>
+
