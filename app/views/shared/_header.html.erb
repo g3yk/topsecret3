@@ -299,11 +299,12 @@
               <%= link_to user_path(notification.user_trigger.username), class: "text-decoration-none" do %>
                 <li class="media hover-media" data-value="<%= notification.id %>">
                   
-                  <% if notification.user_trigger && notification.user_trigger.avatar.attached? %>
-                    <%= image_tag @user.avatar, alt: "img", width: "60px", height: "60px", class: "rounded-circle mr-3" %>
-                  <% else %>
-                    <%= image_tag 'default_profile.png', alt: "default avatar", width: "60", class: "rounded-circle avatar" %>
-                  <% end %>
+                  <% if notification.user_trigger&.avatar&.attached? %>
+  <%= image_tag notification.user_trigger.avatar, alt: "img", width: "60", height: "60", class: "rounded-circle mr-3" %>
+<% else %>
+  <%= image_tag 'default_profile.png', alt: "default avatar", width: "60", class: "rounded-circle avatar" %>
+<% end %>
+
                   
                   <div class="media-body text-dark" style="margin-left: 1rem;">
                     <h6 class="media-header"><%= notification.message %> <i> <%= notification.created_at.strftime('%H:%m, %b %d') %></i></h6>
