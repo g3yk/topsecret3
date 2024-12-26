@@ -2,7 +2,6 @@
   <%= stylesheet_link_tag 'style' %>
 <% end %>
 
-<!---------------------------MOdal Section  satrts------------------->
 <body style="background-color: rgba(0, 0, 0, 0.8);">
 <div class="modal fade" id="followers" >
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -73,8 +72,6 @@
   </div>
 </div>
 
-<!-------------------------------MOdal Ends---------------------------->
-<!-----------------------------------Banner/img Starts-------------------->
 <div class="banner d-flex flex-column justify-content-center" style="gap: 5rem">
   <div class="d-flex flex-column justify-content-center align-items-center">
     <% if @user.avatar.attached? %>
@@ -114,7 +111,7 @@
   </div>
 </div>
 
-<!--------------------Image Portfolio----------------->
+
 
 <% if !@user.posts.empty? %>
   <div class="grid-template container my-4" style="grid-template-columns: repeat(3,1fr)">
