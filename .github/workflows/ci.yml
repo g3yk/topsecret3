@@ -8,6 +8,8 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
+    outputs:
+      execution_time: ${{ steps.time.outputs.execution_time }}  # Store execution time for future use
 
     steps:
       - name: Checkout code
@@ -18,12 +20,26 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Start time measurement
+        id: time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV  # Record start time
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
 
+      - name: End time measurement and calculate execution time
+        id: end_time
+        run: |
+          end_time=$(date +%s)
+          execution_time=$((end_time - ${{ env.start_time }}))
+          echo "Execution time for scan_ruby: $execution_time seconds"
+          echo "::set-output name=execution_time::$execution_time"  # Store execution time as output
+
   scan_js:
     runs-on: ubuntu-latest
+    outputs:
+      execution_time: ${{ steps.time.outputs.execution_time }}
 
     steps:
       - name: Checkout code
@@ -34,12 +50,27 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Start time measurement
+        id: time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV  # Record start time
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
 
+      - name: End time measurement and calculate execution time
+        id: end_time
+        run: |
+          end_time=$(date +%s)
+          execution_time=$((end_time - ${{ env.start_time }}))
+          echo "Execution time for scan_js: $execution_time seconds"
+          echo "::set-output name=execution_time::$execution_time"
+
   lint:
     runs-on: ubuntu-latest
+    outputs:
+      execution_time: ${{ steps.time.outputs.execution_time }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,18 +81,26 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Start time measurement
+        id: time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV  # Record start time
+
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+      - name: End time measurement and calculate execution time
+        id: end_time
+        run: |
+          end_time=$(date +%s)
+          execution_time=$((end_time - ${{ env.start_time }}))
+          echo "Execution time for lint: $execution_time seconds"
+          echo "::set-output name=execution_time::$execution_time"
+
   test:
     runs-on: ubuntu-latest
+    outputs:
+      execution_time: ${{ steps.time.outputs.execution_time }}
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
@@ -75,16 +114,40 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Start time measurement
+        id: time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV  # Record start time
+
       - name: Run tests
         env:
           RAILS_ENV: test
-          # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test test:system
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+      - name: End time measurement and calculate execution time
+        id: end_time
+        run: |
+          end_time=$(date +%s)
+          execution_time=$((end_time - ${{ env.start_time }}))
+          echo "Execution time for test: $execution_time seconds"
+          echo "::set-output name=execution_time::$execution_time"
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [scan_ruby, scan_js, lint, test]  # Ensure all jobs finish first
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Display total execution time
+        run: |
+          echo "Scan Ruby Execution Time: ${{ needs.scan_ruby.outputs.execution_time }} seconds"
+          echo "Scan JS Execution Time: ${{ needs.scan_js.outputs.execution_time }} seconds"
+          echo "Lint Execution Time: ${{ needs.lint.outputs.execution_time }} seconds"
+          echo "Test Execution Time: ${{ needs.test.outputs.execution_time }} seconds"
+
+          # Calculate and display the average execution time
+          total_time=$(( ${needs.scan_ruby.outputs.execution_time} + ${needs.scan_js.outputs.execution_time} + ${needs.lint.outputs.execution_time} + ${needs.test.outputs.execution_time} ))
+          average_time=$(( total_time / 4 ))
+          echo "Average Execution Time: $average_time seconds"
+
