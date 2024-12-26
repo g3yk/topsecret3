@@ -21,7 +21,7 @@
                     <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar" %>
                   <% end %>
                   <div class="media-body text-dark" style="margin-left: 1rem">
-                    <h6 class="media-header">
+                    <h6 lass="media-header">
                       <%= follower.first_name %>&nbsp;<%= follower.last_name %>
                     </h6>
                     <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -131,24 +131,40 @@
 </body>
 
 <script>
-  document.addEventListener("turbo:load", () => {
-    const readMoreBtn = document.getElementById("read-more-btn");
-    const bioContent = document.getElementById("bio-content");
+document.addEventListener("turbo:load", () => {
+  const readMoreBtn = document.getElementById("read-more-btn");
+  const bioContent = document.getElementById("bio-content");
 
-    if (readMoreBtn && bioContent) {
-      readMoreBtn.addEventListener("click", () => {
-        if (bioContent.style.whiteSpace === "nowrap") {
-          bioContent.style.whiteSpace = "normal";
-          bioContent.style.overflow = "visible";
-          bioContent.style.textOverflow = "clip";
-          readMoreBtn.textContent = "Read Less";
-        } else {
-          bioContent.style.whiteSpace = "nowrap";
-          bioContent.style.overflow = "hidden";
-          bioContent.style.textOverflow = "ellipsis";
-          readMoreBtn.textContent = "Read More";
-        }
-      });
-    }
-  });
+  if (readMoreBtn && bioContent) {
+    // Set initial styles for bio content
+    bioContent.style.whiteSpace = "nowrap";
+    bioContent.style.overflow = "hidden";
+    bioContent.style.textOverflow = "ellipsis";
+
+    readMoreBtn.addEventListener("click", () => {
+      if (bioContent.style.whiteSpace === "nowrap") {
+        // Show full content
+        bioContent.style.whiteSpace = "normal";
+        bioContent.style.overflow = "visible";
+        bioContent.style.textOverflow = "clip";
+        readMoreBtn.textContent = "Read Less";
+      } else {
+        // Truncate the content
+        bioContent.style.whiteSpace = "nowrap";
+        bioContent.style.overflow = "hidden";
+        bioContent.style.textOverflow = "ellipsis";
+        readMoreBtn.textContent = "Read More";
+      }
+    });
+  }
+});
+
 </script>
+<style>
+#bio-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* Ensure it's constrained */
+}
+</style>
