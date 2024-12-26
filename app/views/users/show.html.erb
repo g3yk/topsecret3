@@ -2,11 +2,14 @@
   <%= stylesheet_link_tag 'style' %>
 <% end %>
 
-<!---------------------------MOdal Section  satrts------------------->
+<!---------------------------MOdal Section Starts------------------->
 <body style="background-color: rgba(0, 0, 0, 0.7);">
-<div class="modal fade" id="followers" >
+
+<!-- Takipçi modal başlangıcı -->
+<div class="modal fade" id="followers">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
 
+    <!-- Modal içeriği -->
     <div class="modal-content">
       <div class="modal-header">
         <div class="modal-title h4">Followers</div>
@@ -14,8 +17,10 @@
       </div>
 
       <div class="modal-body">
+        <!-- Takipçi listesi -->
         <ul class="list-unstyled">
           <% @user.followers.each do |follower| %>
+            <!-- Her takipçi için bağlantı ve avatar -->
             <%= link_to user_path(follower.username), class: "text-decoration-none" do %>
               <li class="media hover-media">
                 <% if follower.avatar.attached? %>
@@ -38,9 +43,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="followings" >
+<!-- Takip edilen modal başlangıcı -->
+<div class="modal fade" id="followings">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
 
+    <!-- Modal içeriği -->
     <div class="modal-content">
       <div class="modal-header">
         <div class="modal-title h4">Followings</div>
@@ -48,9 +55,11 @@
       </div>
 
       <div class="modal-body">
+        <!-- Takip edilen listesi -->
         <ul class="list-unstyled">
           <% @user.followings.each do |following| %>
 
+            <!-- Her takip edilen için bağlantı ve avatar -->
             <%= link_to user_path(following.username), class: "text-decoration-none" do %>
               <li class="media hover-media">
                 <% if following.avatar.attached? %>
@@ -73,16 +82,18 @@
   </div>
 </div>
 
-<!-------------------------------MOdal Ends---------------------------->
+<!-------------------------------Modal Ends---------------------------->
 <!-----------------------------------Banner/img Starts-------------------->
 <div class="banner d-flex flex-column justify-content-center" style="gap: 5rem">
   <div class="d-flex flex-column justify-content-center align-items-center">
+    <!-- Kullanıcı avatarı -->
     <% if @user.avatar.attached? %>
       <%= image_tag @user.avatar, width: "75", height: "75", class: "rounded-circle avatar" %>
     <% else %>
       <%= image_tag 'default_profile.png', width: "70", class: "rounded-circle avatar" %>
     <% end %>
 
+    <!-- Kullanıcı adı ve biyografisi -->
     <h3 class="text-light"><%= "#{@user.first_name} #{@user.last_name}" %></h3>
     <div class="d-flex flex-column align-items-center justify-content-center text-center" style="height: auto;">
     <p class="text-light" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="bio-content">
@@ -93,32 +104,31 @@
     <% end %>
   </div>
   
-  
- 
+  <!-- Takip/Çık takip düğmeleri -->
     <div class="nav-item nav-link active">
     <% if current_user.following?(@user) %>
-  <%= button_to 'Unfollow', unfollow_path(@user), method: :delete, class: "btn btn-danger btn-sm", remote: true %>
-        <% else %>
-  <%= button_to 'Follow', follow_path(@user), method: :post, class: "btn btn-primary btn-sm", remote: true %>
+      <%= button_to 'Unfollow', unfollow_path(@user), method: :delete, class: "btn btn-danger btn-sm", remote: true %>
+    <% else %>
+      <%= button_to 'Follow', follow_path(@user), method: :post, class: "btn btn-primary btn-sm", remote: true %>
     <% end %>
+    </div>
   </div>
-  </div>
+
+  <!-- Profil sekmeleri -->
   <div class="d-flex justify-content-center align-items-end">
     <ul class="nav text-light">
       <li class="nav-item nav-link active">Fotoğraflar</li>
       <li class="nav-item nav-link active">Postlar</li>
       <li>
-      <a href="#followers" class="nav-item nav-link active text-light" data-toggle="modal">
-        Followers: <%= @user.followers.count %>
-      </a>
-    </li>
+        <a href="#followers" class="nav-item nav-link active text-light" data-toggle="modal">
+          Followers: <%= @user.followers.count %>
+        </a>
+      </li>
       <li>
-      <a href="#followings" class="nav-item nav-link active text-light" data-toggle="modal">
-        Followings: <%= @user.followings.count %>
-      </a>
-    </li>
-
-
+        <a href="#followings" class="nav-item nav-link active text-light" data-toggle="modal">
+          Followings: <%= @user.followings.count %>
+        </a>
+      </li>
     </ul>
   </div>
 </div>
@@ -129,6 +139,7 @@
   <div class="grid-template container my-4" style="grid-template-columns: repeat(3,1fr)">
     <% @user.posts.each do |post| %>
       <div>
+        <!-- Gönderi başlığı ve tarihi -->
         <h3 style="position: relative"><%= post.title.capitalize %> <span style="position: absolute; color:#aaa; right: 0; font-size: 1rem;"><%= post.created_at.strftime('%B %d, %Y') %></span></h3>
         <%= link_to show_post_path(post) do %>
           <% if post.avatar.attached? %>
@@ -142,7 +153,10 @@
 <% else %>
   <h2 style="padding: 10rem; text-align: center; color: white;">The user has not shared any posts yet.</h2>
 <% end %>
+
 </body>
+
+<!-- Profil avatar açılır menüsü için JavaScript -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const profileAvatar = document.getElementById("profile-avatar");
@@ -161,30 +175,13 @@
   });
 </script>
 
+<!-- Bootstrap ve diğer kütüphaneler -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
 
+<!-- Biyografi metni için JavaScript -->
+<script>
 document.addEventListener("turbo:load", () => {
   const readMoreBtn = document.getElementById("read-more-btn");
-  const bioContent = document.getElementById("bio-content");
-
-  if (readMoreBtn && bioContent) {
-    readMoreBtn.addEventListener("click", () => {
-      if (bioContent.style.whiteSpace === "nowrap") {
-        bioContent.style.whiteSpace = "normal";
-        bioContent.style.overflow = "visible";
-        bioContent.style.textOverflow = "clip";
-        readMoreBtn.textContent = "Read Less";
-      } else {
-        bioContent.style.whiteSpace = "nowrap";
-        bioContent.style.overflow = "hidden";
-        bioContent.style.textOverflow = "ellipsis";
-        readMoreBtn.textContent = "Read More";
-      }
-    });
-  }
-});
-
-</script>
+  const bioContent = document.getElementById("
