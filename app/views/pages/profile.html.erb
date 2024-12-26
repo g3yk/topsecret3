@@ -101,79 +101,70 @@
       </ul>
     </div>
   </div>
-
   <% if !@user.posts.empty? %>
   <div class="container my-4">
     <div class="row">
       <% @user.posts.each do |post| %>
         <div class="col-md-4 col-12 mb-4">
-          <div class="p-3 border post-card bg-gray" style="border-radius:5px;">
-            <h3 class="position-relative d-flex justify-content-between align-items-baseline">
-              <span class="post-title"><%= post.title.capitalize %></span>
-            </h3>
-            <span class="position-absolute text-muted" style="font-size: 1rem;">
-              <%= post.created_at.strftime('%B %d, %Y') %>
-            </span>
-
-            <%= link_to show_post_path(post) do %>
+          <%= link_to show_post_path(post), class: "card-link d-block text-decoration-none" do %>
+            <div class="p-3 border post-card bg-gray position-relative" style="border-radius: 5px; transition: border-color 0.3s ease;">
+              <h3 class="position-relative d-flex justify-content-between align-items-baseline" style="margin-top: 15px;">
+                <span class="post-title"><%= post.title.capitalize %></span>
+              </h3>
+              <span class="text-muted date-label" style="font-size: 1rem;">
+                <%= post.created_at.strftime('%B %d, %Y') %>
+              </span>
               <% if post.avatar.attached? %>
-                <%= image_tag post.avatar.first, alt: '', class: 'img-fluid', style: 'width:100%; height: auto; margin-top: 30px;' %>
+                <%= image_tag post.avatar.first, alt: '', class: 'img-fluid', style: 'width: 100%; height: auto;' %>
               <% end %>
-            <% end %>
-
-            <!-- Post Content -->
-            <% if post.avatar.attached? %>
-              <p id="post-content-<%= post.id %>" class="post-content">
-                <%= truncate(post.content, length: 150, separator: ' ') %> 
+              <p id="post-content-<%= post.id %>" class="post-content mt-3" style="margin-top: 0px;">
+                <%= truncate(post.content, length: 150, separator: ' ') %>
                 <span class="more-content" style="display:none;">
                   <%= post.content[150..-1] %>
                 </span>
               </p>
-            <% else %>
-              <p id="post-content-<%= post.id %>" class="post-content" style="margin-top: 45px;">
-                <%= truncate(post.content, length: 150, separator: ' ') %> 
-                <span class="more-content" style="display:none;">
-                  <%= post.content[150..-1] %>
-                </span>
-              </p>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
   </div>
 <% else %>
-  <h2 style="padding: 10rem; text-align: center">The user has not shared any posts yet.</h2>
+  <h2 style="padding: 10rem; text-align: center;">The user has not shared any posts yet.</h2>
 <% end %>
-
-
 
 </body>
 
 <script>
 document.addEventListener("turbo:load", () => {
-  const readMoreBtn = document.getElementById("read-more-btn");
-  const bioContent = document.getElementById("bio-content");
+  const readMoreButtons = document.querySelectorAll("#read-more-btn");
+  const bioContents = document.querySelectorAll("#bio-content");
 
-  if (readMoreBtn && bioContent) {
-    // Set initial styles for bio content
-    bioContent.style.whiteSpace = "nowrap";
-    bioContent.style.overflow = "hidden";
-    bioContent.style.textOverflow = "ellipsis";
+  if (readMoreButtons.length && bioContents.length) {
+    readMoreButtons.forEach((readMoreBtn, index) => {
+      const bioContent = bioContents[index];
 
-    readMoreBtn.addEventListener("click", () => {
-      if (bioContent.style.whiteSpace === "nowrap") {
-        // Show full content
-        bioContent.style.whiteSpace = "normal";
-        bioContent.style.overflow = "visible";
-        bioContent.style.textOverflow = "clip";
-        readMoreBtn.textContent = "Read Less";
-      } else {
-        // Truncate the content
+      if (bioContent) {
+        // Set initial styles for bio content
         bioContent.style.whiteSpace = "nowrap";
         bioContent.style.overflow = "hidden";
         bioContent.style.textOverflow = "ellipsis";
-        readMoreBtn.textContent = "Read More";
+
+        readMoreBtn.addEventListener("click", () => {
+          if (bioContent.style.whiteSpace === "nowrap") {
+            // Show full content
+            bioContent.style.whiteSpace = "normal";
+            bioContent.style.overflow = "visible";
+            bioContent.style.textOverflow = "clip";
+            readMoreBtn.textContent = "Read Less";
+          } else {
+            // Truncate the content
+            bioContent.style.whiteSpace = "nowrap";
+            bioContent.style.overflow = "hidden";
+            bioContent.style.textOverflow = "ellipsis";
+            readMoreBtn.textContent = "Read More";
+          }
+        });
       }
     });
   }
@@ -219,14 +210,46 @@ document.addEventListener("turbo:load", () => {
     font-size: 14px;
   }
 }
+
+/* Card styles */
+.post-card {
+  border: 2px solid transparent; /* Default transparent border */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+.post-card {
+  position: relative; /* Ensures inner absolute elements are positioned relative to the card */
+}
+
+.date-label {
+  position: absolute; /* Positions the element inside the relative container */
+  top: 10px; /* Distance from the top of the card */
+  right: 10px; /* Distance from the right of the card */
+  font-size: 0.9rem; /* Adjusts font size */
+  color: gray; /* Optional: Sets a muted color */
+}
+
+/* Hover effect for the card container only */
+.card-link:hover .post-card {
+  border-color: royalblue; /* Change border color to royal blue */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+  transform: scale(1.02); /* Slight zoom-in effect */
+}
+
+/* Prevent inner elements from inheriting hover effects */
+.card-link:hover .post-title,
+.card-link:hover .text-muted,
+.card-link:hover img,
+.card-link:hover p {
+  color: inherit !important; /* Prevent color changes */
+  text-decoration: none !important; /* Prevent text decoration changes */
+}
+
+
 #bio-content {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%; /* Ensure it's constrained */
 }
-
-
-
 
 </style>
