@@ -128,3 +128,35 @@
       </div>
     </div>
   </div>
+
+<script>
+    // Dropdown Menu Toggle
+    document.addEventListener("DOMContentLoaded", () => {
+      const profileAvatar = document.getElementById("profile-avatar");
+      const dropdownMenu = document.getElementById("dropdown-menu");
+
+      if (profileAvatar && dropdownMenu) {
+        profileAvatar.addEventListener("click", (event) => {
+          event.stopPropagation(); // Prevent menu from closing
+          dropdownMenu.style.display =
+            dropdownMenu.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", () => {
+          dropdownMenu.style.display = "none";
+        });
+      }
+    });
+
+    // Heart Animation
+    const heart = document.querySelector(".fa-heart");
+    if (heart) {
+      heart.parentElement.addEventListener("click", (event) => {
+        event.preventDefault();
+        heart.classList.replace("far", "fas");
+        heart.classList.add("fa-bounce");
+        setTimeout(() => heart.classList.remove("fa-bounce"), 3000);
+      });
+    }
+  </script>
+</body>
