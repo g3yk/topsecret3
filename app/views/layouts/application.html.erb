@@ -2,32 +2,40 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Lockify" %></title>
+
+    <!-- Sayfa duyarlılığı ve mobil uyumluluğu sağlar -->
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= favicon_link_tag 'logo' %>
 
+    <!-- Başlık kısmına ek içerik eklemek için -->
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">
     <%= stylesheet_link_tag  "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= javascript_include_tag "jquery",defer: true %>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css">
+
+    <!-- jQuery, Popper ve Bootstrap JavaScript dosyalarını ekler -->
+    <%= javascript_include_tag "jquery", defer: true %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-
-
-
+    <!-- Bootstrap ve FontAwesome stil dosyalarını yükler -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css">
   </head>
 
   <body>
     <%= render 'shared/header' %>
+
+    <!-- Ana içerik burada yer alır -->
     <%= yield %>
+
     <%= render 'shared/footer' %>
   </body>
 </html>
