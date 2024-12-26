@@ -19,12 +19,12 @@
             <%= link_to user_path(follower.username), class: "text-decoration-none" do %>
               <li class="media hover-media">
                 <% if follower.avatar.attached? %>
-                  <%= image_tag follower.avatar, width: "75", height: "75", class: "rounded-circle avatar" %>
+                  <%= image_tag follower.avatar, width: "60", class: "rounded-circle avatar" %>
                 <% else %>
                   <%= image_tag 'default_profile.png', width: "60", class: "rounded-circle avatar" %>
                 <% end %>
                 <div class="media-body text-dark" style="margin-left: 1rem">
-                  <h6 class="media-header"><%= follower.first_name %>&nbsp;<%= follower.last_name %></h6>
+                  <h6 class="media-header"><%= follower.first_name %>, <strong><%= follower.last_name %></strong></h6>
                   <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </li>
@@ -54,12 +54,12 @@
             <%= link_to user_path(following.username), class: "text-decoration-none" do %>
               <li class="media hover-media">
                 <% if following.avatar.attached? %>
-                  <%= image_tag following.avatar, width: "75", height: "75", class: "rounded-circle avatar" %>
+                  <%= image_tag following.avatar, width: "60", class: "rounded-circle avatar" %>
                 <% else %>
                   <%= image_tag 'default_profile.png', width: "60", class: "rounded-circle avatar" %>
                 <% end %>
                 <div class="media-body text-dark" style="margin-left: 1rem">
-                  <h6 class="media-header"><%= following.first_name %>&nbsp;<%= following.last_name %></h6>
+                  <h6 class="media-header"><%= following.first_name %>, <strong><%= following.last_name %></strong></h6>
                   <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </li>
@@ -78,7 +78,7 @@
 <div class="banner d-flex flex-column justify-content-center" style="gap: 5rem">
   <div class="d-flex flex-column justify-content-center align-items-center">
     <% if @user.avatar.attached? %>
-      <%= image_tag @user.avatar, width: "75", height: "75", class: "rounded-circle avatar" %>
+      <%= image_tag @user.avatar, width: "70", class: "rounded-circle avatar" %>
     <% else %>
       <%= image_tag 'default_profile.png', width: "70", class: "rounded-circle avatar" %>
     <% end %>
