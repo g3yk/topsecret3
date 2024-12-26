@@ -183,7 +183,7 @@
   .navbar-toggler:focus,
   .navbar-toggler:active {
     outline: none; /* Remove default outline */
-    border: 2px solid skyblue; /* Focused border color */
+    border: 3px solid skyblue; /* Focused border color */
   }
 
   /* Ensure image fits the circle in the navbar-toggler */
@@ -214,7 +214,7 @@
       <% if current_user&.avatar&.attached? %>
         <%= image_tag current_user.avatar, alt: "Avatar", class: "rounded-circle", width: "60", height: "60", id: "navbar-avatar" %>
       <% else %>
-        <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "60", height: "60" %>
+        <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "60", height: "60", style: "background-color: lightgray" %>
       <% end %>
       
     </button>
@@ -274,7 +274,7 @@
           <% if current_user&.avatar&.attached? %>
             <%= image_tag current_user.avatar, alt: "Profile Avatar", class: "rounded-circle", width: "75", height: "75", id: "desktop-avatar" %>
           <% else %>
-            <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", width: "75", height: "75" %>
+            <%= image_tag 'default_profile.png', alt: "Default Avatar", class: "rounded-circle", style: "background-color: lightgray", width: "75", height: "75" %>
           <% end %>
           </a>
           <!-- Logout dropdown on hover -->
