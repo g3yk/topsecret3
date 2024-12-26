@@ -232,7 +232,8 @@
             <!-- TODO: Buraya artık alırım bir blink ini @MrLucky44  -->
             <a href="#notification" id="notification-link" class="nav-link menu-item" data-toggle="modal">Notification
               <% if @notifications.any? %>
-                <span style="color: red;"><%= @notifications.size %></span>
+                <i class="fa fa-bell fa-xl fa-shake"></i>
+                <span><%= @notifications.size %></span>
               <% end %>
             </a>
           </li>
@@ -339,6 +340,7 @@
   
   let notificationLink = document.getElementById("notification-link");
   notificationLink.addEventListener("click", function(event) {
+    [...notificationLink.children].forEach(e=>e.hidden=true)
     fetch('/notifications/mark_as_read', {
       method: 'POST',
       headers: {
