@@ -18,6 +18,10 @@ class User < ApplicationRecord
   has_many :posts
   has_many :notifications, foreign_key: :user_target_id, dependent: :destroy
 
+  # Associations: a user can have many likes
+  has_many :likes
+  has_many :liked_posts, through: :likes, source: :post
+
   # Association: a user belongs to a country
   belongs_to :country # , optional: true
 

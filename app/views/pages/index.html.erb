@@ -112,57 +112,61 @@
                         </div>
                     </div>
                     <% @posts.each do |post| %>
-                      <div class="card bg-gray">
-                        <div class="card-header bg-transparent">
-                          <h1><%= post.title %></h1>
-                        </div>
-                        <div class="card-body bg-gray">
-                          <div class="media">
-                            <% if post.user.avatar.attached? %>
-                                <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                            <% else %>
-                                <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                            <% end %>
-                            <div class="media-body bg-gray">
-                              <div style="display: flex; justify-content: space-between;">
-                                <h5><%= post.user.username %></h5>
-                                <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %> </p>
-                              </div>
-                              <p class="card-text text-justify"><%= post.content %></p>
-                              <div class="row no-gutters mb-3">
-                                <div class="col-6 p-1 text-center">
-                                  <% unless post.avatar[1].nil? %>
-                                    <%= image_tag post.avatar[1], alt: "", class: "img-fluid mb-2" %>
-                                  <% end %>
-                                  <% unless post.avatar[0].nil? %>
-                                    <%= image_tag post.avatar[0], alt: "", class: "img-fluid" %>
-                                  <% end %>
-                                </div>
-                                <div class="col-6 p-1 text-center">
-                                  <% unless post.avatar[3].nil? %>
-                                    <%= image_tag post.avatar[3], alt: "", class: "img-fluid mb-2" %>
-                                  <% end %>
-                                  <% unless post.avatar[2].nil? %>
-                                    <%= image_tag post.avatar[2], alt: "", class: "img-fluid" %>
-                                  <% end %>
-                                </div>
-                              </div>
-                              <div class="d-flex justify-content-between">
-                                <div>
-                                  <a href="#" class="text-decoration-none">
-                                    <i class="far fa-heart mr-2"></i> 154
-                                  </a>
-                                </div>
-                                <div>
-                                  <a href="#" class="text-decoration-none">
-                                    <i class="fas fa-comment mr-2"></i> 26
-                                  </a>
-                                </div>
-                              </div>
+                        <div class="card bg-gray">
+                            <div class="card-header bg-transparent">
+                                <h1><%= post.title %></h1>
                             </div>
-                          </div>
+                            <div class="card-body bg-gray">
+                                <div class="media">
+                                    <% if post.user.avatar.attached? %>
+                                        <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                    <% else %>
+                                        <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                    <% end %>
+                                    <div class="media-body bg-gray">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <h5><%= post.user.username %></h5>
+                                            <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %> </p>
+                                        </div>
+                                        <p class="card-text text-justify"><%= post.content %></p>
+                                        <div class="row no-gutters mb-3">
+                                            <div class="col-6 p-1 text-center">
+                                                <% unless post.avatar[1].nil? %>
+                                                    <%= image_tag post.avatar[1], alt: "", class: "img-fluid mb-2" %>
+                                                <% end %>
+                                                <% unless post.avatar[0].nil? %>
+                                                    <%= image_tag post.avatar[0], alt: "", class: "img-fluid" %>
+                                                <% end %>
+                                            </div>
+                                            <div class="col-6 p-1 text-center">
+                                                <% unless post.avatar[3].nil? %>
+                                                    <%= image_tag post.avatar[3], alt: "", class: "img-fluid mb-2" %>
+                                                <% end %>
+                                                <% unless post.avatar[2].nil? %>
+                                                    <%= image_tag post.avatar[2], alt: "", class: "img-fluid" %>
+                                                <% end %>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <%= button_to like_path(post), method: :post, style:"border: none; background-color: inherit; color: #007bff; outline: none;" do %>
+                                                    <% if post.likes.exists?(user_id: current_user.id) %>
+                                                        <i class="fas fa-heart mr-2"></i><span><%= post.likes.count %></span>
+                                                    <% else %>
+                                                        <i class="far fa-heart mr-2"></i><span><%= post.likes.count %></span>
+                                                <% end %>
+                                            <% end %>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-decoration-none">
+                                                    <i class="fas fa-comment mr-2"></i> 26
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     <% end %>
                 </div>
             </div>
@@ -175,23 +179,23 @@
                             <span class="h5">Top Users</span>
                         </div>
                         <div class="card-body">
-                          <ul class="list-unstyled">
-                            <% @top_users.each do |user| %>
-                              <%= link_to user_path(user.username), class: "text-decoration-none", style: "color: inherit" do %>
-                                <li class="d-flex justify-content-between mb-3">
-                                  <div class="d-flex align-items-center">
-                                    <% if user.avatar.attached? %>
-                                      <%= image_tag user.avatar, width: "45px", height: "45px", class: "rounded-circle avatar" %>
-                                    <% else %>
-                                      <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar" %>
+                            <ul class="list-unstyled">
+                                <% @top_users.each do |user| %>
+                                    <%= link_to user_path(user.username), class: "text-decoration-none", style: "color: inherit" do %>
+                                        <li class="d-flex justify-content-between mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <% if user.avatar.attached? %>
+                                                    <%= image_tag user.avatar, width: "45px", height: "45px", class: "rounded-circle avatar" %>
+                                                <% else %>
+                                                    <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar" %>
+                                                <% end %>
+                                                <span><%= user.username %></span>
+                                            </div>
+                                            <span><%= user.followers.count %></span>
+                                        </li>
                                     <% end %>
-                                    <span><%= user.username %></span>
-                                  </div>
-                                  <span><%= user.followers.count %></span>
-                                </li>
-                              <% end %>
-                            <% end %>
-                          </ul>
+                                <% end %>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -225,16 +229,18 @@
       const hearts = document.querySelectorAll(".fa-heart");
       hearts.forEach((heart) => {
         const heartParent = heart.parentElement;
+        const sizeNode = heartParent.querySelector("span")
         heartParent.addEventListener("click", function (e) {
-          e.preventDefault();
           if(heart.classList.contains("far")){
             heart.classList.replace("far", "fas")
             heart.classList.add("fa-bounce")
-
+              
+            sizeNode.textContent = parseInt(sizeNode.textContent) + 1
             setTimeout(() => {heart.classList.remove("fa-bounce")}, 3000)
           } else if(heart.classList.contains("fas")){
             heart.classList.replace("fas", "far")
             heart.classList.remove("fa-bounce")
+            sizeNode.textContent = parseInt(sizeNode.textContent) - 1
           }
         })
       })

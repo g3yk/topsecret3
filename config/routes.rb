@@ -34,6 +34,11 @@ Rails.application.routes.draw do
   get "posts/:id/edit", to: "posts#edit", as: :edit_post
   delete "posts/:id/delete", to: "posts#delete", as: :delete_post
 
+  # Likes
+  post "posts/:post_id/like", to: "likes#like", as: :like
+  post "posts/:post_id/like", to: "likes#create", as: :like_post
+  delete "posts/:post_id/unlike", to: "likes#destroy", as: :unlike_post
+
   # Followships
   post "/:id/follow", to: "followships#follow", as: :follow
   delete "/:id/unfollow", to: "followships#unfollow", as: :unfollow

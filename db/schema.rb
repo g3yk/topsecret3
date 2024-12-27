@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_25_201148) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_27_121028) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,6 +55,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_25_201148) do
     t.index ["following_id"], name: "index_followships_on_following_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.text "message", null: false
     t.boolean "read", default: false
@@ -97,6 +106,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_25_201148) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
   add_foreign_key "notifications", "users", column: "user_target_id"
   add_foreign_key "notifications", "users", column: "user_trigger_id"
   add_foreign_key "posts", "users"
