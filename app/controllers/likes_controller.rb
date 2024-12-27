@@ -8,8 +8,10 @@ class LikesController < ApplicationController
 
     if like.nil?
       @post.likes.create(user_id: current_user.id)
+      Notification.create(user_trigger_id: current_user.id, user_target_id: @post.user.id, message: "#{current_user.username} liked your post.")
     else
       like.destroy
+      Notification.create(user_trigger_id: current_user.id, user_target_id: @post.user.id, message: "#{current_user.username} took their like off your post.")
     end
   end
 
