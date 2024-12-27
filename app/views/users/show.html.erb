@@ -1,41 +1,33 @@
 <% content_for :head do %>
-  <!-- Include the stylesheet for the page -->
   <%= stylesheet_link_tag 'style' %>
 <% end %>
 
 <body style="background-color: rgba(0, 0, 0, 0.8);">
-  <!-- Modal for displaying followers -->
   <div class="modal fade" id="followers">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title h4">Followers</div>
-          <!-- Button to close the modal -->
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <ul class="list-unstyled">
             <% @user.followers.each do |follower| %>
-              <!-- Link to the follower's profile -->
               <%= link_to user_path(follower.username), class: "text-decoration-none" do %>
                 <li class="media hover-media">
                   <% if follower.avatar.attached? %>
-                    <!-- Display follower's avatar if available -->
                     <%= image_tag follower.avatar, width: "75px", height: "75px", class: "rounded-circle avatar" %>
                   <% else %>
-                    <!-- Default avatar if no avatar is attached -->
                     <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar" %>
                   <% end %>
                   <div class="media-body text-dark" style="margin-left: 1rem">
-                    <h6 class="media-header">
-                      <!-- Display follower's name -->
+                    <h6 lass="media-header">
                       <%= follower.first_name %>&nbsp;<%= follower.last_name %>
                     </h6>
                     <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                   </div>
                 </li>
               <% end %>
-              <!-- Divider between followers -->
               <hr class="my-3">
             <% end %>
           </ul>
@@ -44,38 +36,31 @@
     </div>
   </div>
 
-  <!-- Modal for displaying followings -->
   <div class="modal fade" id="followings">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title h4">Followings</div>
-          <!-- Button to close the modal -->
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <ul class="list-unstyled">
             <% @user.followings.each do |following| %>
-              <!-- Link to the following's profile -->
               <%= link_to user_path(following.username), class: "text-decoration-none" do %>
                 <li class="media hover-media">
                   <% if following.avatar.attached? %>
-                    <!-- Display following's avatar if available -->
                     <%= image_tag following.avatar, width: "75px", height: "75px", class: "rounded-circle avatar" %>
                   <% else %>
-                    <!-- Default avatar if no avatar is attached -->
                     <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar" %>
                   <% end %>
                   <div class="media-body text-dark" style="margin-left: 1rem">
                     <h6 class="media-header">
-                      <!-- Display following's name -->
                       <%= following.first_name %>&nbsp;<%= following.last_name %>
                     </h6>
                     <p class="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                   </div>
                 </li>
               <% end %>
-              <!-- Divider between followings -->
               <hr class="my-3">
             <% end %>
           </ul>
@@ -83,42 +68,33 @@
       </div>
     </div>
   </div>
-
-  <!-- User banner displaying profile information -->
   <div class="banner d-flex flex-column justify-content-center align-items-center" style="gap: 2rem; padding: 2rem;">
-    <div class="d-flex flex-column justify-content-center align-items-center">
-      <% if @user.avatar.attached? %>
-        <!-- Display user's avatar -->
-        <%= image_tag @user.avatar, width: "100px", height: "100px", class: "rounded-circle avatar" %>
-      <% else %>
-        <!-- Default avatar if no avatar is attached -->
-        <%= image_tag 'default_profile.png', width: "100px", height: "100px", class: "rounded-circle avatar" %>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar, width: "100px", height: "100px", class: "rounded-circle avatar" %>
+    <% else %>
+      <%= image_tag 'default_profile.png', width: "100px", height: "100px", class: "rounded-circle avatar" %>
+    <% end %>
+    <h3 class="text-light mt-2"><%= "#{@user.first_name} #{@user.last_name}" %></h3>
+    <div class="d-flex flex-column align-items-center justify-content-center text-center" style="height: auto;">
+      <p class="text-light bio-text" style="max-width: 45ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="bio-content">
+        <%= @user.bio if @user.bio.present? %>
+      </p>
+      <% if @user.bio.present? && @user.bio.length > 50 %>
+        <button class="btn btn-link text-light p-0" id="read-more-btn">Read More</button>
       <% end %>
-      <!-- Display user's full name -->
-      <h3 class="text-light mt-2"><%= "#{@user.first_name} #{@user.last_name}" %></h3>
-      <!-- User bio section -->
-      <div class="d-flex flex-column align-items-center justify-content-center text-center" style="height: auto;">
-        <p class="text-light bio-text" style="max-width: 45ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="bio-content">
-          <%= @user.bio if @user.bio.present? %>
-        </p>
-        <% if @user.bio.present? && @user.bio.length > 50 %>
-          <!-- Read More button for long bios -->
-          <button class="btn btn-link text-light p-0" id="read-more-btn">Read More</button>
-        <% end %>
-      </div>
-      <!-- Follow/Unfollow buttons -->
-      <div class="mt-3">
-        <% if current_user.following?(@user) %>
-          <!-- Unfollow button -->
-          <%= button_to 'Unfollow', unfollow_path(@user), method: :delete, class: "btn btn-danger btn-sm", remote: true %>
-        <% else %>
-          <!-- Follow button -->
-          <%= button_to 'Follow', follow_path(@user), method: :post, class: "btn btn-primary btn-sm", remote: true %>
-        <% end %>
-      </div>
     </div>
-    <!-- Section for follower and following counts -->
-    <div class="d-flex justify-content-center align-items-end">
+    <!-- Follow/Unfollow Buttons -->
+    <div class="mt-3">
+      <% if current_user.following?(@user) %>
+        <%= button_to 'Unfollow', unfollow_path(@user), method: :delete, class: "btn btn-danger btn-sm", remote: true %>
+      <% else %>
+        <%= button_to 'Follow', follow_path(@user), method: :post, class: "btn btn-primary btn-sm", remote: true %>
+      <% end %>
+    </div>
+  </div>
+  <!-- Followers and Followings Section -->
+  <div class="d-flex justify-content-center align-items-end">
       <ul class="nav text-light">
         <li>
           <a href="#followers" class="nav-item nav-link active text-light" data-toggle="modal">
@@ -132,54 +108,137 @@
         </li>
       </ul>
     </div>
-  </div>
+</div>
+
 
   <% if !@user.posts.empty? %>
-    <!-- Section for displaying user's posts -->
-    <div class="container my-4">
-      <div class="row">
-        <% @user.posts.each do |post| %>
-          <div class="col-md-4 col-12 mb-4">
-            <div class="p-3 border post-card bg-gray" style="border-radius:5px;">
-              <!-- Post title -->
-              <h3 class="position-relative d-flex justify-content-between align-items-baseline">
-                <span class="post-title"><%= post.title.capitalize %></span>
-              </h3>
-              <!-- Post creation date -->
-              <span class="position-absolute text-muted" style="font-size: 1rem;">
-                <%= post.created_at.strftime('%B %d, %Y') %>
-              </span>
+  <div class="container my-4">
+    <div class="row">
+      <% @user.posts.each do |post| %>
+        <div class="col-md-4 col-12 mb-4">
+          <div class="p-3 border post-card bg-gray" style="border-radius:5px;">
+            <h3 class="position-relative d-flex justify-content-between align-items-baseline">
+              <span class="post-title"><%= post.title.capitalize %></span>
+            </h3>
+            <span class="position-absolute text-muted" style="font-size: 1rem;">
+              <%= post.created_at.strftime('%B %d, %Y') %>
+            </span>
 
-              <%= link_to show_post_path(post) do %>
-                <% if post.avatar.attached? %>
-                  <!-- Post image if attached -->
-                  <%= image_tag post.avatar.first, alt: '', class: 'img-fluid', style: 'width:100%; height: auto; margin-top: 30px;' %>
-                <% end %>
-              <% end %>
-
-              <!-- Post content with truncation for long text -->
+            <%= link_to show_post_path(post) do %>
               <% if post.avatar.attached? %>
-                <p id="post-content-<%= post.id %>" class="post-content">
-                  <%= truncate(post.content, length: 150, separator: ' ') %> 
-                  <span class="more-content" style="display:none;">
-                    <%= post.content[150..-1] %>
-                  </span>
-                </p>
-              <% else %>
-                <p id="post-content-<%= post.id %>" class="post-content" style="margin-top: 45px;">
-                  <%= truncate(post.content, length: 150, separator: ' ') %> 
-                  <span class="more-content" style="display:none;">
-                    <%= post.content[150..-1] %>
-                  </span>
-                </p>
+                <%= image_tag post.avatar.first, alt: '', class: 'img-fluid', style: 'width:100%; height: 250px; margin-top: 30px;' %>
               <% end %>
-            </div>
+            <% end %>
+
+            <!-- Post Content -->
+            <% if post.avatar.attached? %>
+              <p id="post-content-<%= post.id %>" class="post-content">
+                <%= truncate(post.content, length: 150, separator: ' ') %> 
+                <span class="more-content" style="display:none;">
+                  <%= post.content[150..-1] %>
+                </span>
+              </p>
+            <% else %>
+              <p id="post-content-<%= post.id %>" class="post-content" style="margin-top: 45px;">
+                <%= truncate(post.content, length: 150, separator: ' ') %> 
+                <span class="more-content" style="display:none;">
+                  <%= post.content[150..-1] %>
+                </span>
+              </p>
+            <% end %>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
-  <% else %>
-    <!-- Message when the user has no posts -->
-    <h2 style="padding: 10rem; text-align: center">The user has not shared any posts yet.</h2>
-  <% end %>
+  </div>
+<% else %>
+  <h2 style="padding: 10rem; text-align: center">The user has not shared any posts yet.</h2>
+<% end %>
+
+
+
 </body>
+
+<script>
+document.addEventListener("turbo:load", () => {
+  const readMoreBtn = document.getElementById("read-more-btn");
+  const bioContent = document.getElementById("bio-content");
+
+  if (readMoreBtn && bioContent) {
+    // Set initial styles for bio content
+    bioContent.style.whiteSpace = "nowrap";
+    bioContent.style.overflow = "hidden";
+    bioContent.style.textOverflow = "ellipsis";
+
+    readMoreBtn.addEventListener("click", () => {
+      if (bioContent.style.whiteSpace === "nowrap") {
+        // Show full content
+        bioContent.style.whiteSpace = "normal";
+        bioContent.style.overflow = "visible";
+        bioContent.style.textOverflow = "clip";
+        readMoreBtn.textContent = "Read Less";
+      } else {
+        // Truncate the content
+        bioContent.style.whiteSpace = "nowrap";
+        bioContent.style.overflow = "hidden";
+        bioContent.style.textOverflow = "ellipsis";
+        readMoreBtn.textContent = "Read More";
+      }
+    });
+  }
+});
+
+</script>
+<style>
+.post-card {
+  height: 450px;
+}
+
+/* Responsive height for smaller screens */
+@media screen and (max-width: 768px) {
+  .post-card {
+    height: auto; /* Adjust to content size on smaller screens */
+  }
+}
+
+.bg-gray {
+    background-color: #f8f9fa;
+}
+
+/* Make bio responsive */
+.bio-text {
+  max-width: 60ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+/* Adjust bio content on small screens */
+@media (max-width: 768px) {
+  .bio-text {
+    max-width: 100%; /* Allow the text to take full width */
+    white-space: normal; /* Allow text to wrap */
+  }
+}
+
+/* Adjust Read More button placement on small screens */
+@media (max-width: 576px) {
+  #read-more-btn {
+    font-size: 14px;
+  }
+}
+#bio-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* Ensure it's constrained */
+}
+
+
+
+
+</style>
+
+
+  
