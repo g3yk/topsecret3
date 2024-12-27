@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sample long HTML document">
+    <meta name="description" content="Sample long HTML document with additional sections and content">
     <meta name="author" content="Your Name">
-    <title>Long HTML Document</title>
+    <title>Expanded Long HTML Document</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,7 +58,7 @@
 <body>
 
 <header>
-    <h1>Welcome to My Long HTML Page</h1>
+    <h1>Welcome to My Expanded HTML Page</h1>
 </header>
 
 <nav>
@@ -66,76 +66,86 @@
     <a href="#section2">Section 2</a>
     <a href="#section3">Section 3</a>
     <a href="#section4">Section 4</a>
+    <a href="#section5">Section 5</a>
+    <a href="#section6">Section 6</a>
 </nav>
 
 <div class="content">
     <div id="section1" class="section">
         <h2>Section 1: Introduction</h2>
-        <p>This is an introductory section with some text explaining the purpose of the document. HTML stands for HyperText Markup Language, and it's used to create web pages. It's the foundation of most websites and is the standard markup language for documents designed to be displayed in a web browser.</p>
+        <p>Welcome to the extended version of our sample HTML document. This page demonstrates how to create structured, readable, and feature-rich web pages using HTML and CSS.</p>
+        <p>HTML is the backbone of the web, providing the structure and content for web pages. Combined with CSS, it creates visually appealing and user-friendly websites.</p>
     </div>
 
     <div id="section2" class="section">
-        <h2>Section 2: HTML Structure</h2>
-        <p>HTML documents have a simple structure. They are divided into various sections, each with its own purpose. Here's an example of a basic structure:</p>
+        <h2>Section 2: Basics of HTML</h2>
+        <p>HTML consists of elements that define the structure and content of a web page. Below is an example of a simple structure:</p>
         <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
-        &lt;title&gt;Page Title&lt;/title&gt;
+        &lt;title&gt;My Page&lt;/title&gt;
     &lt;/head&gt;
     &lt;body&gt;
-        &lt;h1&gt;This is a Heading&lt;/h1&gt;
+        &lt;h1&gt;Welcome!&lt;/h1&gt;
         &lt;p&gt;This is a paragraph.&lt;/p&gt;
     &lt;/body&gt;
 &lt;/html&gt;
         </pre>
-        <p>This structure includes the <code>DOCTYPE</code> declaration, the <code>&lt;html&gt;</code> element, <code>&lt;head&gt;</code> for metadata, and <code>&lt;body&gt;</code> for the content.</p>
     </div>
 
     <div id="section3" class="section">
-        <h2>Section 3: Forms</h2>
-        <p>Forms in HTML allow users to input data. Here is an example of a simple form:</p>
+        <h2>Section 3: Working with Forms</h2>
+        <p>Forms enable users to input data, such as names and emails. Here's a sample form:</p>
         <form action="/submit" method="post">
-            <label for="name">Name:</label><br>
+            <label for="name">Name:</label>
             <input type="text" id="name" name="name"><br><br>
-            <label for="email">Email:</label><br>
+            <label for="email">Email:</label>
             <input type="email" id="email" name="email"><br><br>
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
-            <input type="submit" value="Submit">
+            <label for="comments">Comments:</label>
+            <textarea id="comments" name="comments"></textarea><br><br>
+            <button type="submit">Submit</button>
         </form>
     </div>
 
     <div id="section4" class="section">
-        <h2>Section 4: Tables</h2>
-        <p>HTML tables are used to display tabular data. Here’s an example of a table:</p>
+        <h2>Section 4: Using Tables</h2>
+        <p>Tables organize data in a grid format. Example:</p>
         <table>
             <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>City</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
             </tr>
             <tr>
-                <td>John Doe</td>
-                <td>30</td>
-                <td>New York</td>
+                <td>Apples</td>
+                <td>10</td>
+                <td>$5</td>
             </tr>
             <tr>
-                <td>Jane Smith</td>
-                <td>25</td>
-                <td>Los Angeles</td>
-            </tr>
-            <tr>
-                <td>Samuel Green</td>
-                <td>35</td>
-                <td>Chicago</td>
+                <td>Bananas</td>
+                <td>6</td>
+                <td>$3</td>
             </tr>
         </table>
+    </div>
+
+    <div id="section5" class="section">
+        <h2>Section 5: Multimedia Integration</h2>
+        <p>HTML allows you to embed images, audio, and video. For example:</p>
+        <img src="https://via.placeholder.com/150" alt="Sample Image">
+        <p>Below is an example of an embedded YouTube video:</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div id="section6" class="section">
+        <h2>Section 6: Conclusion</h2>
+        <p>Thank you for exploring this extended HTML document. Use this template to create structured, well-organized web pages for your projects.</p>
     </div>
 </div>
 
 <footer>
-    <p>&copy; 2024 My Web Page. All rights reserved.</p>
+    <p>&copy; 2024 Your Name. All rights reserved.</p>
 </footer>
 
 </body>
