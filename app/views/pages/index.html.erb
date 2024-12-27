@@ -113,9 +113,6 @@
                     </div>
                     <% @posts.each do |post| %>
                         <div class="card bg-gray">
-                            <div class="card-header bg-transparent">
-                                <h1><%= post.title %></h1>
-                            </div>
                             <div class="card-body bg-gray">
                                 <div class="media">
                                     <% if post.user.avatar.attached? %>
@@ -126,8 +123,12 @@
                                     <div class="media-body bg-gray">
                                         <div style="display: flex; justify-content: space-between;">
                                             <h5><%= post.user.username %></h5>
+                                          
                                             <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %> </p>
                                         </div>
+                                        <div class="card-header bg-transparent">
+                                        <h3><%= post.title %></h3>
+                                    </div>
                                         <p class="card-text text-justify"><%= post.content %></p>
                                         <div class="row no-gutters mb-3">
                                             <div class="col-6 p-1 text-center">
