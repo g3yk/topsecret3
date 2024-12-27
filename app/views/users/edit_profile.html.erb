@@ -1,40 +1,45 @@
 <% content_for :head do %>
-  <%= stylesheet_link_tag 'Ana-Sayfa' %>
-
+  <%= stylesheet_link_tag 'Home-Page' %>
 <% end %>
 
 <style>
+  /* General page styles */
   body {
-    background-color: rgba(0, 0, 0, 0.9); /* Darker background for consistency */
-    color: #FFFFFF; /* White text for readability */
+    background-color: rgba(0, 0, 0, 0.9); /* Darker background */
+    color: #FFFFFF; /* White text */
     font-family: Arial, sans-serif;
   }
 
+  /* Form container */
   .container {
-    max-width: 800px;
+    max-width: 800px; /* Medium width */
     margin: auto;
     padding: 20px;
   }
 
+  /* Form styling */
   .form-container {
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle transparent background */
+    backdrop-filter: blur(10px); /* Subtle blur effect */
+    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
   }
 
+  /* Title styles */
   h1 {
     text-align: center;
-    color: #FFD700; /* Gold title for elegance */
+    color: #FFD700; /* Gold color for title */
     margin-bottom: 20px;
   }
 
+  /* Label styles */
   label {
-    color: #FFD700; /* Gold for labels */
+    color: #FFD700; /* Gold color for labels */
     font-weight: bold;
   }
 
+  /* Input field styles */
   .u-input {
     width: 100%;
     padding: 10px;
@@ -45,14 +50,16 @@
     color: #FFFFFF;
   }
 
+  /* File input styles */
   .form-control-file {
     margin-top: 10px;
   }
 
+  /* Submit button styles */
   .u-btn-submit {
     display: inline-block;
     background-color: rgba(0, 0, 0, 0.5);
-    color: #FFD700; /* Gold on hover */
+    color: #FFD700; /* Gold text */
     border: none;
     padding: 10px 20px;
     border-radius: 10px;
@@ -62,10 +69,11 @@
   }
 
   .u-btn-submit:hover {
-    background-color: #FFD700; /* Gold on hover */
-    color: #000;
+    background-color: #FFD700; /* Gold background on hover */
+    color: #000; /* Black text on hover */
   }
 
+  /* Success and error messages */
   .u-form-send-message {
     display: none;
     margin-top: 15px;
@@ -87,56 +95,67 @@
       <%= form_with model: @user, local: true, url: update_profile_path, class: "signup-form", method: :put do |form| %>
         <%= render partial: "shared/form_errors", locals: { object: form.object } %>
 
+        <!-- Email Field (Disabled) -->
         <div class="form-group">
           <%= form.label :email, "Email" %>
-          <%= form.email_field :email, placeholder: "Geçerli bir e-posta adresi girin", class: "u-input", required: true, disabled: true %>
+          <%= form.email_field :email, placeholder: "Enter a valid email address", class: "u-input", required: true, disabled: true %>
         </div>
 
+        <!-- Username Field -->
         <div class="form-group">
           <%= form.label :username, "Username" %>
-          <%= form.text_field :username, placeholder: "Username giriniz", class: "u-input", required: true %>
+          <%= form.text_field :username, placeholder: "Enter your username", class: "u-input", required: true %>
         </div>
 
+        <!-- Bio Field -->
         <div class="form-group">
-          <%= form.label :bio, "Biyografi" %>
-          <%= form.text_area :bio, placeholder: "Biyografi giriniz", rows: 4, class: "u-input" %>
+          <%= form.label :bio, "Biography" %>
+          <%= form.text_area :bio, placeholder: "Enter your biography", rows: 4, class: "u-input" %>
         </div>
 
+        <!-- First Name Field -->
         <div class="form-group">
-          <%= form.label :first_name, "Adı" %>
-          <%= form.text_field :first_name, placeholder: "Adınızı Girin", class: "u-input", required: true %>
+          <%= form.label :first_name, "First Name" %>
+          <%= form.text_field :first_name, placeholder: "Enter your first name", class: "u-input", required: true %>
         </div>
 
+        <!-- Last Name Field -->
         <div class="form-group">
-          <%= form.label :last_name, "Soyadı" %>
-          <%= form.text_field :last_name, placeholder: "Soyadınızı Girin", class: "u-input", required: true %>
+          <%= form.label :last_name, "Last Name" %>
+          <%= form.text_field :last_name, placeholder: "Enter your last name", class: "u-input", required: true %>
         </div>
 
+        <!-- Date of Birth Field -->
         <div class="form-group">
-          <%= form.label :date_of_birth, "Doğum Tarihiniz" %>
-          <%= form.date_field :date_of_birth, placeholder: "AY/GÜN/YIL", class: "u-input", required: true %>
+          <%= form.label :date_of_birth, "Date of Birth" %>
+          <%= form.date_field :date_of_birth, placeholder: "MM/DD/YYYY", class: "u-input", required: true %>
         </div>
 
+        <!-- Country Selection Field -->
         <div class="form-group">
-          <%= form.label :country_id, "Ülke" %>
-          <%= form.select :country_id, options_for_select(Country.all.pluck(:name, :id)), { prompt: "Bir ülke seçin" }, class: "u-input", required: true %>
+          <%= form.label :country_id, "Country" %>
+          <%= form.select :country_id, options_for_select(Country.all.pluck(:name, :id)), { prompt: "Select a country" }, class: "u-input", required: true %>
         </div>
 
+        <!-- Avatar Upload Field -->
         <div class="form-group">
           <%= form.label :avatar, "Avatar" %>
           <%= form.file_field :avatar, accept: 'image/png,image/jpeg,image/jpg', class: "form-control-file" %>
         </div>
 
+        <!-- Submit Button -->
         <div class="form-group text-center">
-          <%= form.submit "Kaydet", class: "u-btn-submit" %>
+          <%= form.submit "Save", class: "u-btn-submit" %>
         </div>
 
+        <!-- Success Message -->
         <div class="u-form-send-message success">
-          Teşekkür ederiz! Mesajınız gönderildi.
+          Thank you! Your message has been sent.
         </div>
 
+        <!-- Error Message -->
         <div class="u-form-send-message error">
-          Mesajınız gönderilemedi. Lütfen hataları düzeltin ve tekrar deneyin.
+          Your message could not be sent. Please correct the errors and try again.
         </div>
       <% end %>
     </div>
