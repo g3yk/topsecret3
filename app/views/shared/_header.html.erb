@@ -5,9 +5,9 @@
     background-color: rgba(0, 0, 0, 0.65); /* Semi-transparent background */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for visual distinction */
     top: 0; /* Stick to the top of the page */
-    z-index: 1020; /* Ensure it stays above other content */
+    position: relative;
+    z-index: 1; /* Ensure it stays above other content */
     position: flex;
-    z-index: 6;
   }
 
   /* Remove text decoration on hover for menu items */
@@ -238,12 +238,12 @@
           <li class="nav-item">
             <a href="#notification" id="notification-link" class="nav-link menu-item" data-toggle="modal">Notification
               <% if @notifications.any? %>
-                <i class="fa fa-bell fa-xl fa-shake"></i>
+                <i class="fa fa-bell fa-xl fa-shake" style="margin-left: 0.5rem"></i>
                 <span><%= @notifications.size %></span>
               <% end %>
             </a>
           </li>
-          <li class="nav-item search-container">
+          <li class="nav-item search-container" style="min-height: 2rem">
             <span class="search-icon" id="search-icon">
               <i class="fas fa-search"></i>
             </span>
@@ -255,7 +255,7 @@
             <% end %>
           </li>
           <li class="nav-item">
-            <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn" %>
+            <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-danger nav-link logout-btn", style: "padding: .3rem .5rem; margin-bottom: .5rem" %>
           </li>
         <% else %>
           <li class="nav-item">
