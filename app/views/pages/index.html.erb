@@ -113,22 +113,27 @@
                     </div>
                     <% @posts.each do |post| %>
                         <div class="card bg-gray">
+                            <%= link_to  show_post_path(post), style:"color: inherit" do %>
+                              <div class="card-header bg-transparent">
+                                  <h1><%= post.title %></h1>
+                              </div>
+                            <% end %>
                             <div class="card-body bg-gray">
                                 <div class="media">
-                                    <% if post.user.avatar.attached? %>
-                                        <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                                    <% else %>
-                                        <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                    <%= link_to user_path(post.user.username), style:"color: inherit" do %>
+                                      <% if post.user.avatar.attached? %>
+                                          <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                      <% else %>
+                                          <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                      <% end %>
                                     <% end %>
                                     <div class="media-body bg-gray">
                                         <div style="display: flex; justify-content: space-between;">
-                                            <h5><%= post.user.username %></h5>
-                                          
+                                            <%= link_to user_path(post.user.username), style:"color: inherit" do %>
+                                              <h5><%= post.user.username %></h5>
+                                            <% end %>
                                             <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %> </p>
                                         </div>
-                                        <div class="card-header bg-transparent">
-                                        <h3><%= post.title %></h3>
-                                    </div>
                                         <p class="card-text text-justify"><%= post.content %></p>
                                         <div class="row no-gutters mb-3">
                                             <div class="col-6 p-1 text-center">
