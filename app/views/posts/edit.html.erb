@@ -2,20 +2,109 @@
   <%= stylesheet_link_tag 'signup' %> <!-- Link to your specific CSS file -->
 <% end %>
 
-<h2>Upload Post</h2>
-<%= form_with model: @post, local: true, url: update_post_path, class: "signup-form", method: :put do |form| %>
-  <%= render partial: "shared/form_errors", locals: { object: form.object } %>
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title, required: true %>
-  </div>
-  <div>
-    <%= form.label :content %>
-    <%= form.text_area :content, required: true %>
-  </div>
-  <div>
-    <%= form.label :avatar %>
-    <%= form.file_field :avatar, multiple: true, accept: 'image/png,image/jpeg,image/jpg' %>
-  </div>
-  <%= form.submit "Update Post" %>
-<% end %>
+<div class="post-container">
+  <h1>Upload Post</h1>
+  
+  <%= form_with model: @post, local: true, url: update_post_path, class: "signup-form", method: :put do |form| %>
+    <%= render partial: "shared/form_errors", locals: { object: form.object } %>
+
+    <!-- Title Field -->
+    <div>
+      <%= form.label :title, class: "form-label" %>
+      <%= form.text_field :title, required: true, class: "form-control" %>
+    </div>
+    
+    <!-- Content Field -->
+    <div>
+      <%= form.label :content, class: "form-label" %>
+      <%= form.text_area :content, required: true, class: "form-control" %>
+    </div>
+    
+    <!-- Avatar Upload Field -->
+    <div>
+      <%= form.label :avatar, "Upload Image", class: "form-label" %>
+      <%= form.file_field :avatar, accept: 'image/png,image/jpeg,image/jpg', class: "form-control", style:"padding-top:5px;" %>
+    </div>
+    
+    <!-- Submit Button -->
+    <div class="button-container">
+      <%= form.submit "Update Post", class: "button1" %>
+    </div>
+  <% end %>
+</div>
+<style>
+/* General Dark Theme */
+body {
+  background-color: rgba(0, 0, 0, 0.9); /* Dark background */
+  color: #e0e0e0; /* Light text for contrast */
+  font-family: Arial, sans-serif; /* Simple, clean font */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+.post-container {
+  background-color: #1d1d1d; /* Dark card background */
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-container h1 {
+  color: #FFD700; /* Golden title */
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #FFD700; /* Golden label color */
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #2c2c2c; /* Border for inputs */
+  border-radius: 6px;
+  background-color: #2c2c2c; /* Input background */
+  color: #e0e0e0; /* Input text color */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #FFD700; /* Focus border color */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button1 {
+  background-color: #2c2c2c;
+  color: #FFD700;
+  border: 1px solid #3a3a3a;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button1:hover {
+  background-color: #3a3a3a;
+  color: #e0e0e0;
+}
+</style>

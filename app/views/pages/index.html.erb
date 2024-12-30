@@ -4,7 +4,7 @@
 }
 .header {
     backdrop-filter: blur(10px); /* Blur effect */
-    background-color: rgba(0, 0, 0, 0.9); 
+    background-color: rgba(0, 0, 0, 0.3); 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better distinction */
     top: 0; /* Stick to the top of the page */
     z-index: 1020; /* Ensure it stays above other content */
@@ -12,13 +12,13 @@
     z-index: 6;
   }
 </style>
-<body style="height: 100vh;">
+<body style="height: 100vh; background-color: rgba(0, 0, 0, 0.9);">
     <!-------------------------------------------Start Grids layout for lg-xl-3 columns and (xs-lg 1 columns)--------------------------------->
     <div class="container">
         <div class="row">
             <!--------------------------left columns start-->
             <div class="col-12 col-lg-3 ">
-                <div class="left-column">
+                <div class="left-column" >
                     <div class="card card-left1 mb-4 bg-gray">
                         <%= image_tag "photo-1455448972184-de647495d428.jpg", alt: "", class: "card-img-top img-fluid" %>
                         <div class="card-body text-center bg-gray ">
@@ -51,7 +51,7 @@
                     <div class="card shadow-sm card-left2 mb-4 bg-gray">
                         <div class="card-body">
                             <h5 class="mb-3 card-title">
-                                Hakkında
+                                About Me
                                 <small>
                                     <%= link_to "Edit", "/account/edit", class: "ml-1" %>
                                 </small>
@@ -66,86 +66,92 @@
             <!---------------------------------------Middle columns start---------------->
             <div class="col-12 col-lg-6">
                 <div class="middle-column">
-                    <div class="card bg-gray">
-                        <div class="card-header bg-transparent">
-                            <form class="form-inline">
-                                <div class="input-group w-100">
-                                    <input type="text" name="message" id="message" placeholder="Mesaj" class="form-control form-control-md">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-camera"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-body bg-gray">
-                            <div class="media">
-                                <%= image_tag "avatar-fat.jpg", alt: "img", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                                <div class="media-body bg-gray">
-                                    <h5>Burak Kurt</h5>
-                                    <p class="card-text text-justify">Kendi çekmiş olduğum resimleri sizinle paylaşmak istedim. Yorumlarınızı bekliyorum.</p>
-                                    <div class="row no-gutters mb-3">
-                                        <div class="col-6 p-1 text-center">
-                                            <%= image_tag "adventure-alps-clouds-2259810.jpg", alt: "", class: "img-fluid mb-2" %>
-                                            <%= image_tag "aerial-view-architectural-design-buildings-2228123.jpg", alt: "", class: "img-fluid" %>
-                                        </div>
-                                        <div class="col-6 p-1 text-center">
-                                            <%= image_tag "celebration-colored-smoke-dark-2297472.jpg", alt: "", class: "img-fluid mb-2" %>
-                                            <%= image_tag "bodybuilding-exercise-fitness-2294361.jpg", alt: "", class: "img-fluid" %>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <a href="#" class="text-decoration-none">
-                                                <i class="far fa-heart mr-2"></i> 154
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="text-decoration-none">
-                                                <i class="fas fa-comment mr-2"></i> 26
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card bg-gray" >
+                    <div class="card-header bg-transparent">
+<%= form_with model: @post || Post.new, local: true, url: create_post_path, class: "form-inline", method: :post do |form| %>
+  <%= render partial: "shared/form_errors", locals: { object: form.object } %>
+
+    <!-- Container for Title, Content, and Upload Icon -->
+    <div class="form-row d-flex flex-column flex-md-row" style="gap: 2px;">
+
+      <!-- Title Field (Top on small screens, Left side on larger screens) -->
+      <div class="input-group mb-3 title-field" style="flex: 1; max-width: 100%; margin-right: 10px;">
+        <%= form.text_field :title, placeholder: "Title", class: "form-control form-control-md", required: true %>
+      </div>
+
+      <!-- Content Field (Bottom on small screens, Left side on larger screens) -->
+      <div class="input-group mb-3 content-field" style="flex: 1; max-width: 100%; margin-right: 10px;">
+        <%= form.text_area :content, placeholder: "Content", class: "form-control form-control-md", rows: 1, required: true, style: "resize: vertical;" %>
+      </div>
+
+      <!-- Avatar File Input with Camera Icon to Trigger (Right side) -->
+      <div class="input-group mb-3" style="max-width: 100%; display: flex; justify-content: flex-end;">
+        <%= form.file_field :avatar, accept: 'image/png,image/jpeg,image/jpg', class: "form-control form-control-md d-none", id: "avatar-file", multiple: true, required: true %>
+        <div class="input-group-append d-flex justify-content-between align-items-center">
+          <div class="input-group-text" id="camera-icon" style="cursor: pointer; border-radius: 5px; height: 40px;">
+            <i class="fas fa-camera"></i> <!-- Camera Icon -->
+          </div>
+          <!-- Submit Button with Send Icon Next to Camera Icon -->
+          <%= button_tag(type: "submit", class: "input-group-text", style: "background-color: skyblue; border: none; cursor: pointer; padding: 10px; margin-left:5px; border-radius: 5px; height: 40px;") do %>
+            <i class="fas fa-paper-plane"></i> <!-- Send Icon -->
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+
+  <% end %>
+</div>
+
                     </div>
                     <% @posts.each do |post| %>
-                        <div class="card bg-gray mb-3">
+                        <div class="card bg-gray mb-3" style="margin-top: 10px;>
                           <%= link_to show_post_path(post), style: "color: inherit" do %>
 
                           <% end %>
                           <div class="card-body bg-gray">
                             <div class="media">
-                              <%= link_to user_path(post.user.username), style: "color: inherit" do %>
-                                <% if post.user.avatar.attached? %>
-                                  <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                                <% else %>
-                                  <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                                <% end %>
+                            <%= link_to user_path(post.user.username), style: "color: inherit; text-decoration: none;" do %>
+                              <% if post.user.avatar.attached? %>
+                                <%= image_tag post.user.avatar, 
+                                              alt: "avatar", 
+                                              width: "75", 
+                                              height: "75", 
+                                              class: "rounded-circle mr-2", 
+                                              style: "border-radius: 50%; border: 3px solid skyblue;" %>
+                              <% else %>
+                                <%= image_tag 'default_profile.png', 
+                                              alt: "Default Avatar", 
+                                              width: "75", 
+                                              height: "75", 
+                                              class: "rounded-circle mr-2", 
+                                              style: "border-radius: 50%; border: 3px solid skyblue;" %>
                               <% end %>
-                              <div class="media-body bg-gray">
-                                <div style="display: flex; justify-content: space-between;">
-                                  <%= link_to user_path(post.user.username), style: "color: inherit" do %>
-                                    <h3><%= post.user.username %></h3>
-                                  <% end %>
-                                  <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %></p>
-                                </div>
-                                <h4><%= post.title %></h4>
-                                <p class="card-text text-justify"><%= post.content %></p>
-                      
-                                <!-- Images associated with the post -->
-                                <div class="row justify-content-center no-gutters mb-3" style="height: 250px;">
-                                  <% if !post.avatar[0].nil? %>
-                                    <div class="col-6 p-1">
-                                      <div style="width: 100%; height: 100%; overflow: hidden;">
-                                        <%= image_tag post.avatar[0], alt: "", style: "width: 100%; height: 100%; object-fit: cover;" %>
-                                      </div>
-                                    </div>
-                                  <% end %>
+                                                        
+                            <% end %>
+                            <div class="media-body bg-gray" style="padding: 15px; border-radius: 8px; background-color: #2c2c2c; color: #e0e0e0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                              <%= link_to user_path(post.user.username), style: "color: inherit; text-decoration: none;" do %>
+                                <h3 style="margin: 0;"><%= post.user.username %></h3>
+                              <% end %>
+                              <p style="color: #aaa; margin: 0; font-size: 0.9rem;"><%= time_ago_in_words(post.created_at) %></p>
+                            </div>
+                            
+                            <h4 style="margin-top: 5px; color: #FFD700;"><%= post.title %></h4>
+                            
+                            <!-- Images associated with the post -->
+                            <% if !post.avatar[0].nil? %>
+                              <div style="width: 100%; height: 250px; overflow: hidden; margin: 10px 0; border-radius: 8px;">
+                                <%= image_tag post.avatar[0], alt: "Post Image", style: 'width: 100%; height: 100%; object-fit: cover;' %>
                               </div>
-                              
+                            <% end %>
+                            
+                            <!-- Constrain the text content to fit within the card -->
+                            <p class="card-text text-justify" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; line-height: 1.6; max-height: 6.4em;">
+                              <%= post.content %>
+                            </p>
+                        
+                          
 
                                 <div class="d-flex justify-content-between">
                                 <!-- Like Button -->
@@ -171,13 +177,13 @@
                               <%= form_with(model: [post, Comment.new], local: false, id: "comment-form-#{post.id}-form", data: { post_id: post.id }) do |form| %>
                               <%= form.hidden_field :post_id, value: post.id %> <!-- Ensure this hidden field is added -->
                               
-                                  <div class="comment-box-container" style="display: flex; align-items: center;">
+                                  <div class="comment-box-container" style="display: flex; align-items: center; margin-top: 25px;">
                                     <!-- Textarea for the comment -->
                                     <%= form.text_area :content, placeholder: "Write a comment...", class: "form-control", style: "flex-grow: 1; margin-right: 10px;" %>
                                     
                                     <!-- Submit Button with Hover Effect -->
-                                    <button type="submit" class="btn btn-link comment-submit-btn" style="border: none; background-color: inherit; color: #007bff; outline: none;">
-                                      <i class="fas fa-comment mr-2"></i>
+                                    <button type="submit" class="btn btn-link comment-submit-btn" style="border: none; background-color:#FFD700;; color: gray; outline: none;">
+                                    <i class="fas fa-paper-plane"></i>
                                     </button>
                                   </div>                                  
                                 <% end %>
@@ -186,27 +192,27 @@
                             
                                 
                               <!-- Display Comments Section (Initially Hidden) -->
-                              <div id="comment-section-<%= post.id %>" class="comment-section" style="display: none;">
-                                <h4>Comments:</h4>
-                                <% post.comments.order(created_at: :desc).each do |comment| %>
-                                    <div class="comment" style="background-color: white; border-radius: 10px; padding: 10px; margin-bottom: 10px;">
-  <div class="d-flex justify-content-between align-items-center">
-    <!-- Username and Comment Content -->
-    <p class="mb-0" style="flex-grow: 1;"><strong><%= comment.user.username %></strong> - <%= comment.content %></p>
-    
-    <!-- Time ago at the top right -->
-    <p class="comment-time" style="color: #888; font-size: 0.9rem; margin-left: 10px; text-align: right; flex-shrink: 0;">
-      <%= time_ago_in_words(comment.created_at) %> 
-    </p>
-  </div>
-
-  <!-- Comment Deletion Button (Trash Icon) -->
-  <% if comment.user == current_user %>
-    <%= button_to post_comment_path(post, comment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
-      <i class="fas fa-trash-alt"></i> <!-- Trash Icon -->
-    <% end %>
-  <% end %>
+                              <div id="comment-section-<%= post.id %>" class="comment-section" style="display: none; margin-top: 10px;">
+                              <h5 style="color: #fff;">Comments</h5>
+                              <% post.comments.order(created_at: :desc).each do |comment| %>
+                                  <div class="comment" style="background-color: white; border-radius: 10px; padding: 10px; margin-bottom: 10px; color: black;">
+<div class="d-flex justify-content-between align-items-center">
+  <!-- Username and Comment Content -->
+  <p class="mb-0" style="flex-grow: 1;"><strong><%= comment.user.username %></strong> - <%= comment.content %></p>
+  
+  <!-- Time ago at the top right -->
+  <p class="comment-time" style="color: #888; font-size: 0.9rem; margin-left: 10px; text-align: right; flex-shrink: 0;">
+    <%= time_ago_in_words(comment.created_at) %> 
+  </p>
 </div>
+
+<!-- Comment Deletion Button (Trash Icon) -->
+<% if comment.user == current_user %>
+  <%= button_to post_comment_path(post, comment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
+    <i class="fas fa-trash-alt"></i> <!-- Trash Icon -->
+  <% end %>
+<% end %>
+</div>                         
 
                                   <% end %>
                                   
@@ -361,7 +367,7 @@
             newComment.innerHTML = `
               <div class="d-flex justify-content-between align-items-center">
                 <!-- Username and Comment Content -->
-                <p class="mb-0" style="flex-grow: 1;">
+                <p class="mb-0" style="flex-grow: 1;  color: black;">
                   <strong>${data.username}</strong> - ${data.content}
                 </p>
                 
@@ -415,6 +421,19 @@
   }
 });
 
+document.getElementById('camera-icon').addEventListener('click', function() {
+  document.getElementById('avatar-file').click();  // Trigger the file input when the camera icon is clicked
+});
+
+document.querySelector("form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  if (!this.dataset.submitting) {
+    this.dataset.submitting = true;
+    this.submit();  // Trigger form submission
+  }
+});
+
+
 
 </script>
 
@@ -425,6 +444,20 @@
     transform: scale(1.1);
     transition: transform 0.2s ease, color 0.2s ease;
   }
+
+  .input-group-text:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+    transition: transform 0.2s ease, color 0.2s ease;
+    
+  }
+
+  /* Remove the blue focus border animation */
+.comment-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 
   /* Bubble effect when clicked */
   .comment-icon:active {
@@ -446,4 +479,70 @@
       opacity: 0;
     }
   }
+
+  /* Hide the file input field */
+input[type="file"].d-none {
+  display: none;
+}
+
+/* Style the camera icon to look like a button */
+#camera-icon {
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 5px;
+}
+
+#camera-icon:hover {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+</style>
+
+<style>
+/* Ensure no overflow in small screens */
+.card-header {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 10px;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Custom styles for responsiveness */
+@media (max-width: 767px) {
+  .form-row {
+    width: 100%;
+    overflow: hidden;
+    height:auto;
+  }
+
+  .title-field,
+  .content-field {
+    max-width: 100%;
+  }
+
+  .input-group-append {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+}
+/* General style */
+.form-row {
+  gap: 2px;
+  height: 40px;
+}
+
+/* Media Query for Small Screens (max-width: 767px) */
+@media (max-width: 767px) {
+  .form-row {
+    height: auto;
+  }
+}
+
+
 </style>

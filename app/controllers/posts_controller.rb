@@ -41,7 +41,7 @@ class PostsController < ApplicationController
 
     if @post.update(post_params)
       @post.avatar.attach(params[:post][:avatar]) if params[:post][:avatar].present?
-      redirect_to show_post_path(@post), notice: "Post was successfully updated."
+      redirect_to profile_path, notice: "Post was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -61,9 +61,7 @@ class PostsController < ApplicationController
     @comments = @post.comments.order(:created_at)
 
     if @post.nil?
-      render "errors/not_found", locals: {
-        error: "Post not found"
-      }
+      redirect_to posts_path, alert: "Post not found."
       return
     end
 

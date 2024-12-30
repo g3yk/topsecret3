@@ -142,6 +142,22 @@
           <%= form.label :avatar, "Avatar" %>
           <%= form.file_field :avatar, accept: 'image/png,image/jpeg,image/jpg', class: "form-control-file" %>
         </div>
+        <!-- Password Fields -->
+        <div class="form-group">
+          <%= form.label :password, "New Password" %>
+          <%= form.password_field :password, class: "u-input", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :password_confirmation, "Confirm New Password" %>
+          <%= form.password_field :password_confirmation, class: "u-input", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :current_password, "Current Password (to confirm changes)" %>
+          <%= form.password_field :current_password, class: "u-input", required: true %>
+        </div>
+
 
         <!-- Submit Button -->
         <div class="form-group text-center">

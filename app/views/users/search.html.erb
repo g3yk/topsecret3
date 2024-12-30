@@ -1,23 +1,114 @@
+<style>
+/* Dark theme for the search results section */
+body {
+  background-color: rgba(0, 0, 0, 0.9); /* Dark background color */
+  color: #e0e0e0; /* Light text color for contrast */
+}
+
+h1 {
+  color: #FFD700; /* Golden color for the title */
+}
+
+/* Avatar styling for consistent appearance */
+.avatar {
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures image content fits within the avatar */
+  width: 50px; /* Sets the width of the avatar */
+  height: 50px; /* Sets the height of the avatar */
+  padding: 3px; /* Adds padding around the avatar */
+  border: 2px solid skyblue; /* Adds a solid border with skyblue color */
+}
+
+/* Styling for the list of users */
+.results-list {
+  max-height: 70vh;
+  overflow-y: auto; /* Allows scrolling when the list is too long */
+  margin-top: 2rem;
+  background-color: #1d1d1d; /* Dark background for the list */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.list-group-item {
+  border: none; /* Removes the default border */
+  padding: 1rem; /* Adds padding for spacing */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  background-color: #2c2c2c; /* Darker item background */
+  color: #e0e0e0; /* Light text color */
+  border-radius: 6px; /* Rounded corners for each item */
+}
+
+.list-group-item:hover {
+  background-color: #3a3a3a; /* Lighter background on hover */
+}
+
+.list-group-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* Keeps the original color */
+}
+
+.list-group-item a:hover {
+  color: #007bff; /* Highlights the username on hover */
+}
+
+.user-info {
+  margin-left: 15px;
+  line-height: 1.2;
+}
+
+.user-info strong {
+  font-size: 1.1rem;
+  display: block;
+  color: #ffffff; /* White color for the username */
+}
+
+.user-info small {
+  font-size: 0.9rem;
+  color: #bbb; /* Muted color for the name */
+}
+
+.no-results-message {
+  padding: 5rem 2rem;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #ffffff; /* White color for the message */
+}
+</style>
+
 <h1 class="text-center mb-4">Search Results</h1>
 
 <% if @users.any? %>
-  <ul class="list-group" style="height: 100vh;">
+  <ul class="list-group results-list" style="height: 100vh;">
     <% @users.each do |user| %>
       <li class="list-group-item d-flex align-items-center">
-        <%= link_to user_path(user.username), class: "d-flex align-items-center text-decoration-none text-dark" do %>
+        <!-- Link to the user's profile with a clean, clickable layout -->
+        <%= link_to user_path(user.username), class: "d-flex align-items-center text-decoration-none text-dark w-100" do %>
           <% if user.avatar.attached? %>
-            <%= image_tag user.avatar, class: "avatar mr-3 rounded-circle", width: "50", height: "50" %>
+            <!-- Display user's avatar if available -->
+            <%= image_tag user.avatar, class: "avatar mr-3" %>
           <% else %>
-            <%= image_tag 'default_profile.png', class: "avatar mr-3 rounded-circle", width: "50" %>
+            <!-- Display default avatar if user doesn't have one -->
+            <%= image_tag 'default_profile.png', class: "avatar mr-3" %>
           <% end %>
-          <div>
-            <strong class="d-block"><%= user.username %></strong>
-            <small class="text-muted"><%= user.first_name %> <%= user.last_name %></small>
+          
+          <div class="user-info">
+            <!-- Display user's username in bold -->
+            <strong><%= user.username %></strong>
+            <!-- Display user's first and last name in a muted style -->
+            <small><%= user.first_name %> <%= user.last_name %></small>
           </div>
         <% end %>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p class="text-center" style="height: 100vh;">No users found matching your search query.</p>
+  <!-- Display a placeholder message if no users are found -->
+  <div class="no-results-message">
+    <h2>No users found matching your search query.</h2>
+  </div>
 <% end %>
