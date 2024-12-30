@@ -1,9 +1,8 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def index
     @comments = Post.find(params[:post_id]).comments.ordered
-
   end
   def create
     @post = Post.find(params[:post_id])
@@ -14,7 +13,7 @@ class CommentsController < ApplicationController
 
   if @comment.save
     Notification.create(user_trigger_id: current_user.id, user_target_id: @post.user.id, message: "#{current_user.username} commented on your post.")
-    render json: { 
+    render json: {
       username: @comment.user.username,
       content: @comment.content,
       created_at: @comment.created_at,
@@ -23,9 +22,9 @@ class CommentsController < ApplicationController
     }, status: :created
   else
     render json: { error: "Unable to save comment" }, status: :unprocessable_entity
-    end
   end
-  
+  end
+
 
   def destroy
     @post = Post.find(params[:post_id])
@@ -44,5 +43,4 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:content, :user_id, :post_id)
   end
-  
 end

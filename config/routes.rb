@@ -34,11 +34,11 @@ Rails.application.routes.draw do
   get "posts/:id/edit", to: "posts#edit", as: :edit_post
   delete "posts/:id/delete", to: "posts#delete", as: :delete_post
   resources :posts do
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [ :create, :destroy ]
   end
-  
-  
-  
+
+
+
   # Likes
   post "posts/:post_id/like", to: "likes#like", as: :like
   post "posts/:post_id/like", to: "likes#create", as: :like_post
