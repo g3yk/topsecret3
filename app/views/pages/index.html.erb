@@ -1,6 +1,8 @@
 <style>
 .bg-gray {
-    background-color: #f8f9fa;
+
+    background-color: #2c2c2c; 
+    color: #e0e0e0;
 }
 .header {
     backdrop-filter: blur(10px); /* Blur effect */
@@ -25,27 +27,28 @@
                             <% if current_user && current_user.avatar.attached? %>
                                 <%= image_tag current_user.avatar, alt: "img", width: "100", height: "100", class: "rounded-circle mt-n5" %>
                             <% else %>
-                                <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "60", class: "rounded-circle avatar" %>
+                                <%= image_tag 'default_profile.png', alt: "Default Avatar",  width: "100px", height: "100px", class: "rounded-circle avatar" %>
                             <% end %>
                             <h5 class="card-title"><%= current_user.username %></h5>
                             <p class="card-text text-justify mb-2"><%= current_user.bio %></p>
                             <ul class="list-unstyled nav justify-content-center">
-                            <div class="d-flex justify-content-around align-items-center py-3 bg-light border rounded">
-                            <a href="<%= followers_path(@user.username) %>" class="text-dark text-decoration-none text-center mr-4"> <!-- Added margin-right -->
-                                <div style="margin-left: 10px;">
-                                    <span class="d-block">Followers</span>
-                                    <strong class="display-6"><%= @user.followers.count %></strong>
+                            <div class="d-flex justify-content-around align-items-center py-3 bg-dark rounded">
+                              <a href="<%= followers_path(@user.username) %>" class="text-light text-decoration-none text-center mr-4 hoverable-item">
+                                <div>
+                                  <span class="d-block">Followers</span>
+                                  <strong class="display-6"><%= @user.followers.count %></strong>
                                 </div>
-                            </a>
-                            <a href="<%= followings_path(@user.username) %>" class="text-dark text-decoration-none text-center">
-                                <div style="margin-right: 10px;">
-                                    <span class="d-block">Followings</span>
-                                    <strong class="display-6"><%= @user.followings.count %></strong>
+                              </a>
+                              <a href="<%= followings_path(@user.username) %>" class="text-light text-decoration-none text-center hoverable-item">
+                                <div>
+                                  <span class="d-block">Followings</span>
+                                  <strong class="display-6"><%= @user.followings.count %></strong>
                                 </div>
-                            </a>
-                        </div>
-                        
-                            </ul>
+                              </a>
+                            </div>
+                          </ul>
+                          
+                                                   
                         </div>
                     </div>
                     <div class="card shadow-sm card-left2 mb-4 bg-gray">
@@ -75,13 +78,13 @@
     <div class="form-row d-flex flex-column flex-md-row" style="gap: 2px;">
 
       <!-- Title Field (Top on small screens, Left side on larger screens) -->
-      <div class="input-group mb-3 title-field" style="flex: 1; max-width: 100%; margin-right: 10px;">
-        <%= form.text_field :title, placeholder: "Title", class: "form-control form-control-md", required: true %>
+      <div class="input-group mb-3 title-field" style="flex: 1; max-width: 100%; margin-right: 10px; ">
+        <%= form.text_field :title, placeholder: "Title", class: "form-control form-control-md", required: true, style: "background-color: rgba(255, 255, 255, 0.1); color: #FFFFFF;" %>
       </div>
 
       <!-- Content Field (Bottom on small screens, Left side on larger screens) -->
       <div class="input-group mb-3 content-field" style="flex: 1; max-width: 100%; margin-right: 10px;">
-        <%= form.text_area :content, placeholder: "Content", class: "form-control form-control-md", rows: 1, required: true, style: "resize: vertical;" %>
+        <%= form.text_area :content, placeholder: "Content", class: "form-control form-control-md", rows: 1, required: true, style: "resize: vertical; background-color: rgba(255, 255, 255, 0.1); color: #FFFFFF;" %>
       </div>
 
       <!-- Avatar File Input with Camera Icon to Trigger (Right side) -->
@@ -230,35 +233,37 @@
             </div>
             <!----------------------------------Ends Middle columns-->
             <!-------------------------Right columns start-->
-            <div class="col-12 col-lg-3 ">
-                <div class="right-column">
-                    <div class="card bg-gray">
-                        <div class="card-header bg-transparent">
-                            <span class="h5">Top Users</span>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <% @top_users.each do |user| %>
-                                    <%= link_to user_path(user.username), class: "text-decoration-none", style: "color: inherit" do %>
-                                        <li class="d-flex justify-content-between mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <% if user.avatar.attached? %>
-                                                    <%= image_tag user.avatar, width: "45px", height: "45px", class: "rounded-circle avatar" %>
-                                                <% else %>
-                                                    <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar" %>
-                                                <% end %>
-                                                <span><%= user.username %></span>
-                                            </div>
-                                            <span><%= user.followers.count %></span>
-                                        </li>
-                                    <% end %>
-                                <% end %>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<div class="col-12 col-lg-3">
+    <div class="right-column">
+        <div class="card bg-gray">
+            <div class="card-header bg-transparent">
+                <span class="h5">Top Users</span>
             </div>
-            <!---------------------------Ends Right columns-->
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <% @top_users.each do |user| %>
+                        <%= link_to user_path(user.username), class: "text-decoration-none text-white" ,style: "color: white; text-decoration: none;" do %>
+                            <li class="d-flex justify-content-between align-items-center mb-3 hoverable-item">
+                                <div class="d-flex align-items-center">
+                                    <% if user.avatar.attached? %>
+                                        <%= image_tag user.avatar, width: "45px", height: "45px", class: "rounded-circle avatar mr-3" %>
+                                    <% else %>
+                                        <%= image_tag 'default_profile.png', width: "45px", height: "45px", class: "rounded-circle avatar mr-3" %>
+                                    <% end %>
+                                    <span class="username"><%= user.username %></span>
+                                </div>
+                                <span class="followers-count"><%= user.followers.count %></span>
+                            </li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!---------------------------Ends Right columns-->
+
+            
         </div>
     </div>
     <!------------------------------------End Grids layout---------------------------------------->
@@ -544,5 +549,132 @@ input[type="file"].d-none {
   }
 }
 
+h1 {
+  color: #FFD700; /* Gold color for the title */
+}
+
+/* Avatar styling for consistent appearance */
+.avatar {
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures image content fits within the avatar */
+  width: 50px; /* Sets the width of the avatar */
+  height: 50px; /* Sets the height of the avatar */
+  padding: 3px; /* Adds padding around the avatar */
+  border: 2px solid skyblue; /* Adds a solid border with skyblue color */
+}
+
+/* Styling for the list of followings */
+.followings-list {
+  max-height: 70vh;
+  overflow-y: auto; /* Allows scrolling when the list is too long */
+  margin-top: 2rem;
+  background-color: #1d1d1d; /* Dark background for the list */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.list-group-item {
+  border: none; /* Removes the default border */
+  padding: 1rem; /* Adds padding for spacing */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  background-color: #2c2c2c; /* Darker item background */
+  color: #e0e0e0; /* Light text color */
+  border-radius: 6px; /* Rounded corners for each item */
+}
+
+.list-group-item:hover {
+  background-color: #3a3a3a; /* Lighter background on hover */
+}
+
+.list-group-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* Keeps the original color */
+}
+
+.list-group-item a:hover {
+  color: #007bff; /* Highlights the username on hover */
+  transform: scale(1.05); /* Slight scale effect for a subtle zoom */
+  border-radius: 6px;
+}
+
+.following-info {
+  margin-left: 15px;
+  line-height: 1.2;
+}
+
+.following-info strong {
+  font-size: 1.1rem;
+  display: block;
+  color: #ffffff; /* White color for the username */
+}
+
+.following-info small {
+  font-size: 0.9rem;
+  color: #bbb; /* Muted color for the name */
+}
+
+.no-followings-message {
+  padding: 5rem 2rem;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #ffffff; /* White color for the message */
+}
+
+/* Hover effect for the list items */
+.hoverable-item {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hoverable-item:hover {
+    background-color: #444444; /* Darker background on hover */
+    transform: scale(1.05); /* Slight scale effect for a subtle zoom */
+}
+
+.hoverable-item:hover .username {
+    color: #FFD700; /* Change the username color to gold when hovered */
+}
+
+.hoverable-item:hover .followers-count {
+    color: #FFD700; /* Change the followers count color to gold on hover */
+}
+
+/* Styling for the avatar */
+.avatar {
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Styling for the card and list items */
+.card {
+    background-color: #2c2c2c; /* Dark background for the card */
+    border-radius: 8px;
+}
+
+/* Adjusting text color and hover effects */
+.username {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.followers-count {
+    font-size: 1rem;
+    color: #e0e0e0; /* Light color for the followers count */
+}
+
+/* Ensure that list items have enough space */
+.list-unstyled li {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Adjust the avatar size and spacing */
+.mr-3 {
+    margin-right: 15px;
+}
 
 </style>
