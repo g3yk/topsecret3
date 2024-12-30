@@ -57,6 +57,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by(id: params[:id])
+    @comments = @post.comments.includes(:user)
+    @comments = @post.comments.order(:created_at)
 
     if @post.nil?
       render "errors/not_found", locals: {

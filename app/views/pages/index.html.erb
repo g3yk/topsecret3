@@ -112,68 +112,114 @@
                         </div>
                     </div>
                     <% @posts.each do |post| %>
-                        <div class="card bg-gray">
-                            <%= link_to  show_post_path(post), style:"color: inherit" do %>
-                              <div class="card-header bg-transparent">
-                                  <h1><%= post.title %></h1>
-                              </div>
-                            <% end %>
-                            <div class="card-body bg-gray">
-                                <div class="media">
-                                    <%= link_to user_path(post.user.username), style:"color: inherit" do %>
-                                      <% if post.user.avatar.attached? %>
-                                          <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                                      <% else %>
-                                          <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
-                                      <% end %>
-                                    <% end %>
-                                    <div class="media-body bg-gray">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <%= link_to user_path(post.user.username), style:"color: inherit" do %>
-                                              <h5><%= post.user.username %></h5>
-                                            <% end %>
-                                            <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %> </p>
-                                        </div>
-                                        <p class="card-text text-justify"><%= post.content %></p>
-                                        <div class="row no-gutters mb-3">
-                                            <div class="col-6 p-1 text-center">
-                                                <% unless post.avatar[1].nil? %>
-                                                    <%= image_tag post.avatar[1], alt: "", class: "img-fluid mb-2" %>
-                                                <% end %>
-                                                <% unless post.avatar[0].nil? %>
-                                                    <%= image_tag post.avatar[0], alt: "", class: "img-fluid" %>
-                                                <% end %>
-                                            </div>
-                                            <div class="col-6 p-1 text-center">
-                                                <% unless post.avatar[3].nil? %>
-                                                    <%= image_tag post.avatar[3], alt: "", class: "img-fluid mb-2" %>
-                                                <% end %>
-                                                <% unless post.avatar[2].nil? %>
-                                                    <%= image_tag post.avatar[2], alt: "", class: "img-fluid" %>
-                                                <% end %>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <%= button_to like_path(post), method: :post, style:"border: none; background-color: inherit; color: #007bff; outline: none;" do %>
-                                                    <% if post.likes.exists?(user_id: current_user.id) %>
-                                                        <i class="fas fa-heart mr-2"></i><span><%= post.likes.count %></span>
-                                                    <% else %>
-                                                        <i class="far fa-heart mr-2"></i><span><%= post.likes.count %></span>
-                                                <% end %>
-                                            <% end %>
-                                            </div>
-                                            <div>
-                                                <a href="#" class="text-decoration-none">
-                                                    <i class="fas fa-comment mr-2"></i> 26
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="card bg-gray mb-3">
+                          <%= link_to show_post_path(post), style: "color: inherit" do %>
+
+                          <% end %>
+                          <div class="card-body bg-gray">
+                            <div class="media">
+                              <%= link_to user_path(post.user.username), style: "color: inherit" do %>
+                                <% if post.user.avatar.attached? %>
+                                  <%= image_tag post.user.avatar, alt: "avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                <% else %>
+                                  <%= image_tag 'default_profile.png', alt: "Default Avatar", width: "55px", height: "55px", class: "rounded-circle mr-3" %>
+                                <% end %>
+                              <% end %>
+                              <div class="media-body bg-gray">
+                                <div style="display: flex; justify-content: space-between;">
+                                  <%= link_to user_path(post.user.username), style: "color: inherit" do %>
+                                    <h3><%= post.user.username %></h3>
+                                  <% end %>
+                                  <p style="color: #aaa;"><%= time_ago_in_words(post.created_at) %></p>
                                 </div>
+                                <h4><%= post.title %></h4>
+                                <p class="card-text text-justify"><%= post.content %></p>
+                      
+                                <!-- Images associated with the post -->
+                                <div class="row justify-content-center no-gutters mb-3" style="height: 250px;">
+                                  <% if !post.avatar[0].nil? %>
+                                    <div class="col-6 p-1">
+                                      <div style="width: 100%; height: 100%; overflow: hidden;">
+                                        <%= image_tag post.avatar[0], alt: "", style: "width: 100%; height: 100%; object-fit: cover;" %>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                              </div>
+                              
+
+                                <div class="d-flex justify-content-between">
+                                <!-- Like Button -->
+                                <div class="like-button">
+                                  <%= button_to like_path(post), method: :post, style: "border: none; background-color: inherit; color: #007bff; outline: none;" do %>
+                                    <% if post.likes.exists?(user_id: current_user.id) %>
+                                      <i class="fas fa-heart mr-2"></i><span><%= post.likes.count %></span>
+                                    <% else %>
+                                      <i class="far fa-heart mr-2"></i><span><%= post.likes.count %></span>
+                                    <% end %>
+                                  <% end %>
+                                </div>
+                              
+                                <!-- Comment Icon (Clickable) -->
+                                <button class="comment-icon" style="cursor: pointer; color: #007bff; border: none; background: none;" id="comment-icon-<%= post.id %>">
+                                  <i class="fas fa-comment mr-2"></i> <%= post.comments.count %> <!-- Display the number of comments -->
+                                </button>
+                                
+                              </div>
+                              
+                              <!-- Comment Form (Initially Hidden) -->
+                              <div id="comment-form-<%= post.id %>" class="comment-form" style="display: none;">
+                              <%= form_with(model: [post, Comment.new], local: false, id: "comment-form-#{post.id}-form", data: { post_id: post.id }) do |form| %>
+                              <%= form.hidden_field :post_id, value: post.id %> <!-- Ensure this hidden field is added -->
+                              
+                                  <div class="comment-box-container" style="display: flex; align-items: center;">
+                                    <!-- Textarea for the comment -->
+                                    <%= form.text_area :content, placeholder: "Write a comment...", class: "form-control", style: "flex-grow: 1; margin-right: 10px;" %>
+                                    
+                                    <!-- Submit Button with Hover Effect -->
+                                    <button type="submit" class="btn btn-link comment-submit-btn" style="border: none; background-color: inherit; color: #007bff; outline: none;">
+                                      <i class="fas fa-comment mr-2"></i>
+                                    </button>
+                                  </div>                                  
+                                <% end %>
+                              </div>
+                              
+                            
+                                
+                              <!-- Display Comments Section (Initially Hidden) -->
+                              <div id="comment-section-<%= post.id %>" class="comment-section" style="display: none;">
+                                <h4>Comments:</h4>
+                                <% post.comments.order(created_at: :desc).each do |comment| %>
+                                    <div class="comment" style="background-color: white; border-radius: 10px; padding: 10px; margin-bottom: 10px;">
+  <div class="d-flex justify-content-between align-items-center">
+    <!-- Username and Comment Content -->
+    <p class="mb-0" style="flex-grow: 1;"><strong><%= comment.user.username %></strong> - <%= comment.content %></p>
+    
+    <!-- Time ago at the top right -->
+    <p class="comment-time" style="color: #888; font-size: 0.9rem; margin-left: 10px; text-align: right; flex-shrink: 0;">
+      <%= time_ago_in_words(comment.created_at) %> 
+    </p>
+  </div>
+
+  <!-- Comment Deletion Button (Trash Icon) -->
+  <% if comment.user == current_user %>
+    <%= button_to post_comment_path(post, comment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
+      <i class="fas fa-trash-alt"></i> <!-- Trash Icon -->
+    <% end %>
+  <% end %>
+</div>
+
+                                  <% end %>
+                                  
+                                  
+                              </div>
+                            </div>                                                                  
+                                
                             </div>
+                          </div>
                         </div>
-                    <% end %>
+                      <% end %>
+                      
+                      
                 </div>
             </div>
             <!----------------------------------Ends Middle columns-->
@@ -213,43 +259,191 @@
 
 </body>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const profileAvatar = document.getElementById("profile-avatar");
-      const dropdownMenu = document.getElementById("dropdown-menu");
-    
-      // TODO: #profile-avatar id'si bu sayfada ve header'da yok, bu yüzden alttaki click event'i hata dönüyor; bi bakarsın @MrLucky44
+  document.addEventListener("DOMContentLoaded", function () {
+    const profileAvatar = document.getElementById("profile-avatar");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+
+    // Ensure the profile-avatar exists to avoid errors
+    if (profileAvatar && dropdownMenu) {
       profileAvatar.addEventListener("click", function (event) {
-        event.stopPropagation(); // Menü kapanmasın diye tıklamayı engelle
+        event.stopPropagation();
         dropdownMenu.style.display =
-          dropdownMenu.style.display === "block" ? "none" : "block"; // Menü göster/gizle
+          dropdownMenu.style.display === "block" ? "none" : "block";
       });
 
-      // Sayfanın herhangi bir yerine tıklanırsa menüyü kapat
       document.addEventListener("click", function () {
-        dropdownMenu.style.display = "none"; // Menü kapanacak
+        dropdownMenu.style.display = "none";
+      });
+    }
+  });
+
+  document.addEventListener('turbo:load', () => {
+    const hearts = document.querySelectorAll(".fa-heart");
+    hearts.forEach((heart) => {
+      const heartParent = heart.parentElement;
+      const sizeNode = heartParent.querySelector("span");
+
+      heartParent.addEventListener("click", function (e) {
+        if (heart.classList.contains("far")) {
+          heart.classList.replace("far", "fas");
+          heart.classList.add("fa-bounce");
+          sizeNode.textContent = parseInt(sizeNode.textContent) + 1;
+          setTimeout(() => { heart.classList.remove("fa-bounce"); }, 3000);
+        } else if (heart.classList.contains("fas")) {
+          heart.classList.replace("fas", "far");
+          heart.classList.remove("fa-bounce");
+          sizeNode.textContent = parseInt(sizeNode.textContent) - 1;
+        }
       });
     });
+  });
 
-    
-    document.addEventListener('turbo:load', () => {
-      const hearts = document.querySelectorAll(".fa-heart");
-      hearts.forEach((heart) => {
-        const heartParent = heart.parentElement;
-        const sizeNode = heartParent.querySelector("span")
-        heartParent.addEventListener("click", function (e) {
-          if(heart.classList.contains("far")){
-            heart.classList.replace("far", "fas")
-            heart.classList.add("fa-bounce")
-              
-            sizeNode.textContent = parseInt(sizeNode.textContent) + 1
-            setTimeout(() => {heart.classList.remove("fa-bounce")}, 3000)
-          } else if(heart.classList.contains("fas")){
-            heart.classList.replace("fas", "far")
-            heart.classList.remove("fa-bounce")
-            sizeNode.textContent = parseInt(sizeNode.textContent) - 1
+  document.addEventListener("turbo:load", function () {
+  // Function to toggle the visibility of the comment form and section
+  function toggleCommentForm(postId) {
+    const commentForm = document.getElementById(`comment-form-${postId}`);
+    const commentSection = document.getElementById(`comment-section-${postId}`);
+
+    // Toggle visibility for form and section
+    if (commentForm.style.display === "none" || commentForm.style.display === "") {
+      commentForm.style.display = "block";
+      commentSection.style.display = "block";
+    } else {
+      commentForm.style.display = "none";
+      commentSection.style.display = "none";
+    }
+  }
+
+  // Attach event listener to comment icon for toggling comment form
+  document.querySelectorAll(".comment-icon").forEach(icon => {
+    icon.addEventListener("click", function () {
+      const postId = this.id.split("-").pop(); // Get the post ID from the icon ID
+      toggleCommentForm(postId);
+    });
+  });
+
+  // Submit comment without reloading page
+  document.querySelectorAll(".comment-submit-btn").forEach(button => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent page reload
+
+      const form = this.closest("form");
+      const formData = new FormData(form);
+      const postId = form.getAttribute("data-post-id"); // Get post ID from form data
+      formData.append("post_id", postId); // Ensure post_id is added to the formData
+
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
+      // Perform the AJAX request to submit the comment
+      fetch(`/posts/${postId}/comments`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+          "X-CSRF-Token": csrfToken // Add CSRF token to the headers
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json(); // Parse JSON response
+        })
+        .then(data => {
+          if (data.username && data.content && data.created_at) {
+            const commentSection = document.getElementById(`comment-section-${postId}`);
+            const commentsCountElement = document.getElementById(`comments-count-${postId}`);
+
+            // Create a new comment element
+            const newComment = document.createElement("div");
+            newComment.classList.add("comment");
+            newComment.style.cssText = "background-color: white; border-radius: 10px; padding: 10px; margin-bottom: 10px;";
+            newComment.innerHTML = `
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Username and Comment Content -->
+                <p class="mb-0" style="flex-grow: 1;">
+                  <strong>${data.username}</strong> - ${data.content}
+                </p>
+                
+                <!-- Time ago at the top right -->
+                <p class="comment-time" style="color: #888; font-size: 0.9rem; margin-left: 10px; text-align: right; flex-shrink: 0;">
+                  ${timeAgo(new Date(data.created_at))}
+                </p>
+              </div>
+            `;
+
+            // Insert the new comment at the top of the comment section
+            commentSection.prepend(newComment);
+
+            // Update the comments count
+            const currentCount = parseInt(commentsCountElement.innerText, 10) || 0;
+            commentsCountElement.innerText = currentCount + 1;
+
+            // Reset the form after submission
+            form.reset();
+
+            // Optionally close the comment form after submission
+            
+          } else {
+            console.error("Error: Missing expected data in response");
           }
         })
-      })
-    })
-  </script>
+        .catch(error => {
+          console.error("Error submitting comment:", error);
+        });
+    });
+  });
 
+  // Helper function to calculate time ago
+  function timeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    const intervals = [
+      { label: "year", seconds: 31536000 },
+      { label: "month", seconds: 2592000 },
+      { label: "day", seconds: 86400 },
+      { label: "hour", seconds: 3600 },
+      { label: "minute", seconds: 60 },
+      { label: "second", seconds: 1 }
+    ];
+    for (const interval of intervals) {
+      const count = Math.floor(seconds / interval.seconds);
+      if (count > 0) {
+        return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`;
+      }
+    }
+    return "just now";
+  }
+});
+
+
+</script>
+
+<style>
+  /* Button hover effect */
+  .comment-submit-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  /* Bubble effect when clicked */
+  .comment-icon:active {
+    position: relative;
+    animation: bubble 0.5s ease-out;
+  }
+
+  @keyframes bubble {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+</style>
