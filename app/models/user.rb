@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :followings, through: :followships, source: :following
   has_many :reverse_followships, foreign_key: :following_id, class_name: "Followship", dependent: :destroy
   has_many :followers, through: :reverse_followships, source: :follower
-
+  has_many :comments, dependent: :destroy
   # Associations: a user can have many posts and notifications
   has_many :posts
   has_many :notifications, foreign_key: :user_target_id, dependent: :destroy

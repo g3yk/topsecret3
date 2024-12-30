@@ -3,7 +3,8 @@ class Post < ApplicationRecord
 
   has_many :likes
   has_many_attached :avatar
-
+  has_many :comments, dependent: :destroy
+  
   validates :title, presence: true
   validates :content, presence: true
   validate :correct_avatar_mime_type
