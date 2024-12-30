@@ -137,11 +137,13 @@
                       
                                 <!-- Images associated with the post -->
                                 <div class="row justify-content-center no-gutters mb-3" style="height: 250px;">
-                                <div class="col-6 p-1">
-                                  <div style="width: 100%; height: 100%; overflow: hidden;">
-                                    <%= image_tag post.avatar[0], alt: "", style: "width: 100%; height: 100%; object-fit: cover;" %>
-                                  </div>
-                                </div>
+                                  <% if !post.avatar[0].nil? %>
+                                    <div class="col-6 p-1">
+                                      <div style="width: 100%; height: 100%; overflow: hidden;">
+                                        <%= image_tag post.avatar[0], alt: "", style: "width: 100%; height: 100%; object-fit: cover;" %>
+                                      </div>
+                                    </div>
+                                  <% end %>
                               </div>
                               
 
@@ -186,7 +188,7 @@
                               <!-- Display Comments Section (Initially Hidden) -->
                               <div id="comment-section-<%= post.id %>" class="comment-section" style="display: none;">
                                 <h4>Comments:</h4>
-                                <% post.comments.each do |comment| %>
+                                <% post.comments.order(created_at: :desc).each do |comment| %>
                                     <div class="comment" style="background-color: white; border-radius: 10px; padding: 10px; margin-bottom: 10px;">
   <div class="d-flex justify-content-between align-items-center">
     <!-- Username and Comment Content -->
